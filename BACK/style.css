@@ -1,0 +1,475 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  background: radial-gradient(circle at top, #202020, #050505);
+  color: #f5f5f5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Общий контейнер экранов */
+.screen {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ==== Стартовый экран с фоном ==== */
+
+.screen-start {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* фиксируем на полный экран */
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background: url('assets/logo-basf-bot.jpg') center/cover no-repeat;
+  filter: grayscale(1) contrast(1.1) brightness(0.45);
+  transform: scale(1.05);
+}
+
+/* лёгкий градиент поверх фона */
+.screen-start::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(255, 75, 43, 0.25), transparent),
+    radial-gradient(circle at bottom, rgba(0, 0, 0, 0.8), transparent);
+  pointer-events: none;
+}
+
+/* Внутренний flex-контейнер поверх фона */
+.start-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 24px 20px 24px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Верхний блок с заголовком */
+.hero {
+  margin-top: 24px;
+}
+
+.hero-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.hero-subtitle {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Нижняя панель меню */
+.bottom-menu {
+  margin-top: auto; /* прижать к низу внутри start-inner */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+start-info {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(10, 10, 10, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.start-info-title {
+  font-weight: 600;
+  color: #ffb3a0;
+  margin-bottom: 2px;
+}
+
+.start-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.start-info-label {
+  font-weight: 500;
+  color: #ffd9b3;
+}
+
+.start-info-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  opacity: 0.9;
+}
+
+.start-info-meta span {
+  font-size: 11px;
+}
+
+.start-info-hint {
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+/* Одна «ящик»-кнопка */
+.menu-item {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 10px 8px;
+  cursor: pointer;
+  transform: translateY(4px);
+  transition:
+    transform 160ms ease-out,
+    background 160ms ease-out,
+    border-color 160ms ease-out,
+    box-shadow 160ms ease-out;
+}
+
+/* Активная кнопка в нижнем меню */
+.menu-item.active {
+  background: rgba(255, 75, 43, 0.25);
+  border-color: rgba(255, 75, 43, 0.8);
+  box-shadow: 0 0 0 1px rgba(255, 75, 43, 0.6),
+    0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+.menu-item.active .menu-label {
+  color: #ffdfdf;
+}
+
+.menu-item .menu-label {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Эффект «выезжающего ящика» */
+.menu-item:hover {
+  transform: translateY(0);
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.menu-item:active {
+  transform: translateY(1px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.45);
+}
+
+/* ==== Экраны ввода и результата ==== */
+
+.screen-input,
+.screen-result {
+  background: radial-gradient(circle at top, #191919, #050505);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(10, 10, 10, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.back-btn {
+  border: none;
+  background: none;
+  color: #f5f5f5;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 999px;
+  transition: background 0.15s ease-out, transform 0.1s ease-out;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(-1px);
+}
+
+.content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Карточки полей */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+.field span {
+  opacity: 0.85;
+  font-size: 13px;
+}
+
+input[type='text'],
+input[type='file'],
+select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 5, 5, 0.9);
+  color: #f5f5f5;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out,
+    background 0.15s ease-out;
+}
+
+input[type='text']:focus,
+input[type='file']:focus,
+select:focus {
+  border-color: #ff4b2b;
+  box-shadow: 0 0 0 1px rgba(255, 75, 43, 0.5);
+  background: rgba(10, 10, 10, 0.95);
+}
+
+/* Кнопки */
+button {
+  font-size: 15px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s ease-out, transform 0.12s ease-out,
+    box-shadow 0.18s ease-out;
+  font-weight: 500;
+}
+
+button.primary {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(255, 65, 108, 0.35);
+}
+
+button.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(255, 65, 108, 0.5);
+}
+
+button.secondary {
+  background: rgba(20, 20, 20, 0.9);
+  color: #f5f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+button.secondary:hover {
+  transform: translateY(-1px);
+  background: rgba(35, 35, 35, 0.95);
+}
+
+button.wide {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Кнопки grade */
+.grade-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.grade-buttons button {
+  background: rgba(20, 20, 20, 0.95);
+  min-width: 54px;
+  border-radius: 999px;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.grade-buttons button.selected {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(255, 65, 108, 0.4);
+}
+
+/* Кнопки выбора способа оценки */
+.assessment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* При желании на широких экранах можно в одну строку */
+@media (min-width: 600px) {
+  .assessment-options {
+    flex-direction: row;
+  }
+
+  .assessment-options button {
+    flex: 1;
+  }
+}
+
+/* Таблица редкости */
+.rarity-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rarity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.rarity-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffb3a0;
+}
+
+.rarity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 11px;
+  color: rgba(245, 245, 245, 0.8);
+}
+
+.rarity-desc {
+  font-size: 12px;
+  color: rgba(245, 245, 245, 0.9);
+}
+
+.rarity-price {
+  font-weight: 500;
+  color: #ffd9b3;
+}
+.rarity-open {
+  font-size: 11px;
+  color: rgba(245, 245, 245, 0.75);
+}
+.rarity-note {
+  margin-top: 10px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+/* Переключатель брендов в таблицах */
+.brand-switcher {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.brand-switcher--hidden {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* Кнопки брендов (потом стилизуем под мини-кассеты) */
+.brand-chip {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(10, 10, 10, 0.9);
+  color: #f5f5f5;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease-out,
+    border-color 0.2s ease-out,
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+}
+
+.brand-chip.active {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  border-color: transparent;
+  box-shadow: 0 6px 14px rgba(255, 65, 108, 0.45);
+}
+
+.brand-chip:active {
+  transform: translateY(1px);
+}
+
+.brand-chip[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+/* Экран результата */
+.result-text {
+  white-space: pre-wrap;
+  background: rgba(10, 10, 10, 0.9);
+  border-radius: 14px;
+  padding: 14px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  max-height: 60vh;
+  overflow: auto;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Анимация появления */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

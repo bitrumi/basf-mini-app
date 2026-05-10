@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>BASF Bot Mini App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Экран 1: старт / фон -->
+    <div class="screen screen-start" id="screen-start">
+      <div class="background"></div>
+
+      <div class="start-inner">
+        <div class="hero">
+          <h1 class="hero-title">BASF BOT</h1>
+          <p class="hero-subtitle">Оценка кассет, CD и винила</p>
+        </div>
+
+        <!-- Центровой инфо-блок -->
+        <div class="start-info">
+          <div class="start-info-title">Пример редкости (Sony)</div>
+          <div class="start-info-row">
+            <div class="start-info-label">HF / HF‑S</div>
+            <div class="start-info-meta">
+              <span>Тип I</span>
+              <span>Редкость: 1</span>
+              <span>NOS: ~2–5 €</span>
+              <span>Открытая: ~1–2 €</span>
+            </div>
+          </div>
+          <div class="start-info-row">
+            <div class="start-info-label">Metal‑Master</div>
+            <div class="start-info-meta">
+              <span>Тип IV</span>
+              <span>Редкость: 5</span>
+              <span>NOS: ~50–80+ €</span>
+              <span>Открытая: ~15–30+ €</span>
+            </div>
+          </div>
+          <div class="start-info-hint">
+            Полные таблицы по брендам смотри во вкладке «Таблицы» внизу.
+          </div>
+        </div>
+
+        <div class="bottom-menu">
+          <div class="menu-item active" data-section="assessment">
+            <span class="menu-label">Оценка</span>
+          </div>
+          <div class="menu-item" data-section="collection">
+            <span class="menu-label">Коллекции</span>
+          </div>
+          <div class="menu-item" data-section="rarity">
+            <span class="menu-label">Таблицы</span>
+          </div>
+          <div class="menu-item" data-section="reserve">
+            <span class="menu-label">Резерв</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Экран выбора способа оценки -->
+    <div class="screen screen-assessment" id="screen-assessment">
+      <div class="header">
+        <button class="back-btn" id="btn-back-from-assessment">←</button>
+        <h2>Оценка кассет</h2>
+      </div>
+
+      <div class="content">
+        <div class="field">
+          <span>Выберите способ оценки</span>
+          <div class="assessment-options">
+            <button class="primary" data-action="photo">Оценить по фото</button>
+            <button class="secondary" data-action="manual">Оценить вручную</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Экран 2: ввод данных (по фото) -->
+    <div class="screen screen-input" id="screen-input-photo">
+      <header class="header">
+        <button class="back-btn" id="btn-back-from-photo">←</button>
+        <h2>Оценка по фото</h2>
+      </header>
+
+      <main class="content">
+        <label class="field">
+          <span>Фото носителя (пока опционально):</span>
+          <input type="file" id="input-photo" accept="image/*" />
+        </label>
+
+        <label class="field">
+          <span>Исполнитель / релиз:</span>
+          <input
+            type="text"
+            id="input-artist-title"
+            placeholder="Каста — Что нам делать в Греции"
+          />
+        </label>
+
+        <label class="field">
+          <span>Тип носителя:</span>
+          <select id="select-media">
+            <option value="cassette">Cassette</option>
+            <option value="cd">CD</option>
+            <option value="vinyl">Vinyl</option>
+          </select>
+        </label>
+
+        <div class="field">
+          <span>Состояние (grade):</span>
+          <div class="grade-buttons" id="grade-buttons">
+            <button type="button" data-grade="M">M</button>
+            <button type="button" data-grade="NM">NM</button>
+            <button type="button" data-grade="VG+">VG+</button>
+            <button type="button" data-grade="VG">VG</button>
+            <button type="button" data-grade="G">G</button>
+          </div>
+        </div>
+
+        <button id="btn-calc-photo" class="primary wide">
+          Рассчитать
+        </button>
+      </main>
+    </div>
+
+    <!-- Экран 2b: ввод вручную -->
+    <div class="screen screen-input" id="screen-input-manual">
+      <header class="header">
+        <button class="back-btn" id="btn-back-from-manual">←</button>
+        <h2>Ввод данных вручную</h2>
+      </header>
+
+      <main class="content">
+        <label class="field">
+          <span>Исполнитель / релиз:</span>
+          <input
+            type="text"
+            id="input-artist-title-manual"
+            placeholder="Каста — Что нам делать в Греции"
+          />
+        </label>
+
+        <label class="field">
+          <span>Тип носителя:</span>
+          <select id="select-media-manual">
+            <option value="cassette">Cassette</option>
+            <option value="cd">CD</option>
+            <option value="vinyl">Vinyl</option>
+          </select>
+        </label>
+
+        <div class="field">
+          <span>Состояние (grade):</span>
+          <div class="grade-buttons" id="grade-buttons-manual">
+            <button type="button" data-grade="M">M</button>
+            <button type="button" data-grade="NM">NM</button>
+            <button type="button" data-grade="VG+">VG+</button>
+            <button type="button" data-grade="VG">VG</button>
+            <button type="button" data-grade="G">G</button>
+          </div>
+        </div>
+
+        <button id="btn-calc-manual" class="primary wide">
+          Рассчитать
+        </button>
+      </main>
+    </div>
+
+    <!-- Экран 3: результат -->
+    <div class="screen screen-result" id="screen-result">
+      <header class="header">
+        <button class="back-btn" id="btn-back-from-result">←</button>
+        <h2>Результат оценки</h2>
+      </header>
+
+      <main class="content">
+        <pre id="result-text" class="result-text"></pre>
+        <button id="btn-new" class="primary wide">
+          Оценить ещё
+        </button>
+      </main>
+    </div>
+
+   <!-- Экран: Таблицы редкости (бренды) -->
+<div class="screen" id="screen-rarity">
+  <header class="header">
+    <button class="back-btn" id="btn-back-from-rarity">←</button>
+    <h2>Таблицы редкости</h2>
+  </header>
+
+  <main class="content">
+    <!-- Кнопки брендов -->
+    <div class="brand-switcher brand-switcher--hidden">
+      <button class="brand-chip active" data-brand="agfa">Agfa</button>
+      <button class="brand-chip" data-brand="basf">Basf</button>
+      <button class="brand-chip" data-brand="denon">Denon</button>
+      <button class="brand-chip" data-brand="maxell">Maxell</button>
+      <button class="brand-chip" data-brand="sony">Sony</button>
+      <button class="brand-chip" data-brand="tdk">TDK</button>
+    </div>
+     <!-- Таблица: AGFA -->
+<div class="field brand-table" data-brand="agfa" style="display: none;">
+  <span>Кассеты AGFA — серии, редкость и примерные цены</span>
+
+  <div class="rarity-table">
+    <div class="rarity-row">
+      <div class="rarity-label">Ferrocolor / Ferrocolor HD</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I</span>
+        <span class="rarity-years">Годы: кон. 70‑х–80‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~3–8 €</span>
+        <span class="rarity-open">Открытая: ~1–3 €</span>
+      </div>
+      <div class="rarity-desc">
+        Основные феррики AGFA, разные поколения и дизайны; поздние Ferrocolor HD считаются одними из лучших FeI у бренда.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">Superferro / Superferro Dynamic</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I (High)</span>
+        <span class="rarity-years">Годы: 70‑е–80‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~4–9 €</span>
+        <span class="rarity-open">Открытая: ~1.5–3 €</span>
+      </div>
+      <div class="rarity-desc">
+        Усиленные феррики, ближе к «аудиофильским» Type I; интересны для записи и коллекций поздней AGFA.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">SuperChrom</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Chrome)</span>
+        <span class="rarity-years">Годы: 70‑е–80‑е</span>
+        <span class="rarity-score">Редкость: 3</span>
+        <span class="rarity-price">NOS: ~6–15 €</span>
+        <span class="rarity-open">Открытая: ~2–5 €</span>
+      </div>
+      <div class="rarity-desc">
+        Классический хром AGFA, ценится за фирменный звук и внешний вид старых европейских линеек.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">Superchrom HDX</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (High Chrome)</span>
+        <span class="rarity-years">Годы: 80‑е</span>
+        <span class="rarity-score">Редкость: 4–5</span>
+        <span class="rarity-price">NOS: ~15–30+ €</span>
+        <span class="rarity-open">Открытая: ~5–10+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Топовая хромовая серия AGFA; запечатанные экземпляры часто уходят по цене десятков евро за штуку.
+      </div>
+    </div>
+  </div>
+
+  <p class="rarity-note">
+    Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии; для редких серий вроде Superchrom HDX разброс по рынку может быть значительным.
+  </p>
+</div>
+
+    <!-- Таблица: BASF -->
+<div class="field brand-table" data-brand="basf" style="display: none;">
+  <span>Кассеты BASF — серии, редкость и примерные цены</span>
+
+  <div class="rarity-table">
+    <div class="rarity-row">
+      <div class="rarity-label">Ferro Extra I / II</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I / II</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 1–2</span>
+        <span class="rarity-price">NOS: ~2–5 €</span>
+        <span class="rarity-open">Открытая: ~1–2 €</span>
+      </div>
+      <div class="rarity-desc">
+        Массовые феррики и начальные хромы BASF, хороши для записи, часто попадаются лотами.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">Chromdioxid</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Chrome)</span>
+        <span class="rarity-years">Годы: 70‑е–80‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~4–10 €</span>
+        <span class="rarity-open">Открытая: ~2–4 €</span>
+      </div>
+      <div class="rarity-desc">
+        Классический чистый хром BASF, ценится за характерный звук и дизайн старых серий.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">Chrome Maxima II</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Chrome)</span>
+        <span class="rarity-years">Годы: кон. 80‑х–90‑е</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~8–20 €</span>
+        <span class="rarity-open">Открытая: ~3–7 €</span>
+      </div>
+      <div class="rarity-desc">
+        Топовый чистый хром BASF, часто рассматривается как один из лучших хромовых blank‑ов.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">Reference Maxima TP II</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (High)</span>
+        <span class="rarity-years">Годы: 90‑е</span>
+        <span class="rarity-score">Редкость: 4–5</span>
+        <span class="rarity-price">NOS: ~20–35+ €</span>
+        <span class="rarity-open">Открытая: ~7–12+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Флагманская серия BASF конца эпохи кассет; редкие запечатанные экземпляры ценятся коллекционерами.
+      </div>
+    </div>
+  </div>
+
+  <p class="rarity-note">
+    Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии, но для редких серий вроде Reference Maxima разброс может быть значительным.
+  </p>
+</div>
+<!-- Таблица: Denon -->
+<div class="field brand-table" data-brand="denon" style="display: none;">
+  <span>Кассеты Denon — серии, редкость и примерные цены</span>
+
+  <div class="rarity-table">
+    <div class="rarity-row">
+      <div class="rarity-label">DX1 / DX3</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 1–2</span>
+        <span class="rarity-price">NOS: ~2–5 €</span>
+        <span class="rarity-open">Открытая: ~1–2 €</span>
+      </div>
+      <div class="rarity-desc">
+        Базовые феррики Denon, надёжные рабочие кассеты; ценность скорее утилитарная, чем коллекционная.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">HD6 / HD7</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (High)</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~4–10 €</span>
+        <span class="rarity-open">Открытая: ~1.5–3 €</span>
+      </div>
+      <div class="rarity-desc">
+        Качественные хромовые/усиленные хромовые ленты, хороший баланс между ценой и звучанием.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">HD8</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Metal Particle)</span>
+        <span class="rarity-years">Годы: кон. 80‑х–90‑е</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~8–18+ €</span>
+        <span class="rarity-open">Открытая: ~3–6 €</span>
+      </div>
+      <div class="rarity-desc">
+        Почти топовый Denon: metal‑particle в позиции Type II, ценится аудиофилами за звук и нестандартную формулу.
+      </div>
+    </div>
+  </div>
+
+  <p class="rarity-note">
+    Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии.
+  </p>
+</div>
+    <!-- Таблица: Maxell -->
+<div class="field brand-table" data-brand="maxell" style="display: none;">
+  <span>Кассеты Maxell — серии, редкость и примерные цены</span>
+
+  <div class="rarity-table">
+    <div class="rarity-row">
+      <div class="rarity-label">UD / UD I</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I</span>
+        <span class="rarity-years">Годы: 70‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 1–2</span>
+        <span class="rarity-price">NOS: ~2–5 €</span>
+        <span class="rarity-open">Открытая: ~1–2 €</span>
+      </div>
+      <div class="rarity-desc">
+        Базовые феррики Maxell, рабочие лошадки; интересны для серийных подборок и записей, не как инвестиция.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">XLII / UD‑XLII</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (High Bias)</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~5–12 €</span>
+        <span class="rarity-open">Открытая: ~2–4 €</span>
+      </div>
+      <div class="rarity-desc">
+        Классический хром Maxell, очень уважаем в сообществе; хороший баланс качества и цены.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">XLII‑S</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Super)</span>
+        <span class="rarity-years">Годы: 80‑е–2000‑е</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~15–30+ €</span>
+        <span class="rarity-open">Открытая: ~5–10+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Топовый хром Maxell, многие считают одним из лучших Type II; NOS‑экземпляры стоят заметно дороже обычных XLII.
+      </div>
+    </div>
+  </div>
+
+  <p class="rarity-note">
+    Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии; особенно редкие выпуски (ранние XLII‑S, спецсерии) могут стоить дороже.
+  </p>
+</div>  
+<!-- Таблица: Sony -->
+    <div class="field brand-table" data-brand="sony">
+      <span>Кассеты Sony — серии, редкость и примерные цены</span>
+
+      <div class="rarity-table">
+        <div class="rarity-row">
+          <div class="rarity-label">HF / HF‑S</div>
+          <div class="rarity-meta">
+            <span class="rarity-type">Тип: I</span>
+            <span class="rarity-years">Годы: 70‑е–90‑е</span>
+            <span class="rarity-score">Редкость: 1</span>
+            <span class="rarity-price">NOS: ~2–5 €</span>
+            <span class="rarity-open">Открытая: ~1–2 €</span>
+          </div>
+          <div class="rarity-desc">
+            Массовые базовые феррики, интересны больше для ностальгии и серийных подборок, чем как инвестиция.
+          </div>
+        </div>
+
+        <div class="rarity-row">
+          <div class="rarity-label">UCX / UCX‑S</div>
+          <div class="rarity-meta">
+            <span class="rarity-type">Тип: II / III</span>
+            <span class="rarity-years">Годы: 70‑е–80‑е</span>
+            <span class="rarity-score">Редкость: 2–3</span>
+            <span class="rarity-price">NOS: ~4–8 €</span>
+            <span class="rarity-open">Открытая: ~1.5–3 €</span>
+          </div>
+          <div class="rarity-desc">
+            Ранние хром / FeCr, заметно интереснее базовых HF, особенно в хорошем дизайне / японских версиях.
+          </div>
+        </div>
+
+        <div class="rarity-row">
+          <div class="rarity-label">UX / UX‑S / UX‑Pro</div>
+          <div class="rarity-meta">
+            <span class="rarity-type">Тип: II</span>
+            <span class="rarity-years">Годы: 80‑е–90‑е</span>
+            <span class="rarity-score">Редкость: 2–3</span>
+            <span class="rarity-price">NOS: ~5–15 €</span>
+            <span class="rarity-open">Открытая: ~2–5 €</span>
+          </div>
+          <div class="rarity-desc">
+            Основные хромы Sony: UX / UX‑S стоят умеренно, UX‑Pro ближе к коллекционному уровню и часто дороже обычных UX.
+          </div>
+        </div>
+
+        <div class="rarity-row">
+          <div class="rarity-label">Metal‑ES / Metal‑XR</div>
+          <div class="rarity-meta">
+            <span class="rarity-type">Тип: IV</span>
+            <span class="rarity-years">Годы: 80‑е</span>
+            <span class="rarity-score">Редкость: 3–4</span>
+            <span class="rarity-price">NOS: ~15–30+ €</span>
+            <span class="rarity-open">Открытая: ~5–10+ €</span>
+          </div>
+          <div class="rarity-desc">
+            Топовые металлы, считаются одними из лучших по звуку и дизайну; цены сильно зависят от длины и рынка.
+          </div>
+        </div>
+
+        <div class="rarity-row">
+          <div class="rarity-label">Metal‑Master</div>
+          <div class="rarity-meta">
+            <span class="rarity-type">Тип: IV</span>
+            <span class="rarity-years">Годы: кон. 80‑х–90‑е</span>
+            <span class="rarity-score">Редкость: 5</span>
+            <span class="rarity-price">NOS: ~50–80+ €</span>
+            <span class="rarity-open">Открытая: ~15–30+ €</span>
+          </div>
+          <div class="rarity-desc">
+            Керамический корпус, культовый blank. NOS‑экземпляры часто уходят по цене десятков евро за штуку и выше.
+          </div>
+        </div>
+      </div>
+
+      <p class="rarity-note">
+        Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Диапазоны для открытых рассчитываются примерно как ~0.3× от NOS‑цен при хорошем состоянии, но для редких позиций разброс может быть больше.
+      </p>
+    </div>
+    <!-- Таблица: TDK -->
+<div class="field brand-table" data-brand="tdk" style="display: none;">
+  <span>Кассеты TDK — серии, редкость и примерные цены</span>
+
+  <div class="rarity-table">
+    <div class="rarity-row">
+      <div class="rarity-label">D</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I</span>
+        <span class="rarity-years">Годы: 70‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 1</span>
+        <span class="rarity-price">NOS: ~2–5 €</span>
+        <span class="rarity-open">Открытая: ~1–2 €</span>
+      </div>
+      <div class="rarity-desc">
+        Массовый феррик TDK, самый распространённый вариант; хорош для повседневной записи и ностальгии.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">AD</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I (High)</span>
+        <span class="rarity-years">Годы: 70‑е–80‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~3–7 €</span>
+        <span class="rarity-open">Открытая: ~1–3 €</span>
+      </div>
+      <div class="rarity-desc">
+        Усиленный феррик, по измерениям не сильно уступает ранним SA; ценится как лучший Type I у TDK своего времени.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">SA</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (High Bias)</span>
+        <span class="rarity-years">Годы: 70‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 2–3</span>
+        <span class="rarity-price">NOS: ~5–12 €</span>
+        <span class="rarity-open">Открытая: ~2–4 €</span>
+      </div>
+      <div class="rarity-desc">
+        Классический хром TDK, один из самых популярных Type II; большой разброс по ценам в зависимости от года и дизайна.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">SA‑X</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Super, dual layer)</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~12–25+ €</span>
+        <span class="rarity-open">Открытая: ~4–8+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Топовый хром TDK, двойное покрытие; по отзывам и тестам считается одним из лучших Type II на рынке.
+      </div>
+    </div>
+  </div>
+
+  <p class="rarity-note">
+    Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии; особо редкие ранние SA‑X / спецверсии могут стоить заметно дороже.
+  </p>
+</div>
+
+<script src="app.js"></script>
+  </body>
+</html>
