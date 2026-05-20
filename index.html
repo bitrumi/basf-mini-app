@@ -9,47 +9,175 @@
   </head>
   <body>
     <!-- Экран 1: старт / фон -->
-    <div class="screen screen-start" id="screen-start">
-      <div class="background"></div>
+<div class="screen screen-start" id="screen-start">
+  <div class="background"></div>
 
-      <div class="start-inner">
-        <!-- Языковой переключатель в правом верхнем углу -->
-        <div class="lang-switcher">
-          <button class="lang-current" id="lang-toggle">
-            RU
-          </button>
-          <div class="lang-dropdown" id="lang-dropdown">
-            <button class="lang-option" data-lang="ru">RU</button>
-            <button class="lang-option" data-lang="en">EN</button>
-            <button class="lang-option" data-lang="zh">中文</button>
-            <button class="lang-option" data-lang="ja">日本語</button>
-            <button class="lang-option" data-lang="ko">한국어</button>
-          </div>
-        </div>
-
-        <div class="hero">
-          <h1 class="hero-title">BASF BOT</h1>
-          <p class="hero-subtitle">Оценка кассет, CD и винила</p>
-        </div>
-
-        <div class="bottom-menu">
-          <div class="menu-item active" data-section="assessment">
-            <span class="menu-label">Оценка</span>
-          </div>
-          <div class="menu-item" data-section="collection">
-            <span class="menu-label">Коллекции</span>
-          </div>
-          <div class="menu-item" data-section="rarity">
-            <span class="menu-label">Таблицы</span>
-          </div>
-          <div class="menu-item" data-section="reserve">
-            <span class="menu-label">Резерв</span>
-          </div>
-        </div>
+  <div class="start-inner">
+    <!-- Языковой переключатель в правом верхнем углу -->
+    <div class="lang-switcher">
+      <button class="lang-current" id="lang-toggle">
+        RU
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option" data-lang="ru">RU</button>
+        <button class="lang-option" data-lang="en">EN</button>
+        <button class="lang-option" data-lang="zh">中文</button>
+        <button class="lang-option" data-lang="ja">日本語</button>
+        <button class="lang-option" data-lang="ko">한국어</button>
       </div>
     </div>
 
-    <!-- Экран выбора способа оценки -->
+    <div class="hero">
+      <h1 class="hero-title" data-i18n="start_title">BASF BOT</h1>
+      <p class="hero-subtitle" data-i18n="start_subtitle">
+        Оценка кассет, CD и винила
+      </p>
+    </div>
+
+    <div class="bottom-menu">
+      <div class="menu-item active" data-section="assessment">
+        <span class="menu-label" data-i18n="menu_assessment">Оценка</span>
+      </div>
+      <div class="menu-item" data-section="music">
+        <span class="menu-label" data-i18n="menu_music">Музыка</span>
+      </div>
+      <div class="menu-item" data-section="rarity">
+        <span class="menu-label" data-i18n="menu_rarity">Таблицы</span>
+      </div>
+      <div class="menu-item" data-section="reserve">
+        <span class="menu-label" data-i18n="menu_reserve">Резерв</span>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <!-- Модальное окно: Музыка -->
+<div class="modal-overlay" id="music-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 data-i18n="music_modal_title">Музыка</h2>
+      <button class="modal-close" id="music-modal-close">×</button>
+    </div>
+
+    <div class="modal-content">
+      <p class="hint" data-i18n="music_modal_hint">
+        Введи название трека, исполнителя или кусок текста песни.
+      </p>
+
+      <div class="music-search">
+        <input
+          id="music-query"
+          type="text"
+          placeholder="Каста — Громче воды"
+        />
+        <button id="music-search-btn" data-i18n="music_modal_search_btn">
+          Найти
+        </button>
+      </div>
+
+      <div id="music-results" class="music-results">
+        <p class="placeholder" data-i18n="music_modal_placeholder">
+          Скоро здесь появится поиск по Deezer/Spotify. Пока это заглушка.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  
+     <!-- Модальное окно: Резерв / PRO -->
+<div class="modal-overlay" id="reserve-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 data-i18n="reserve_modal_title">Резерв / PRO доступ</h2>
+      <button class="modal-close" id="reserve-modal-close">×</button>
+    </div>
+
+    <div class="modal-content">
+      <div class="field">
+        <span data-i18n="reserve_modal_pro_title">Что даёт BASF BOT PRO:</span>
+        <p
+          data-i18n="reserve_modal_pro_bullets"
+          style="font-size:13px; opacity:0.85; margin:4px 0 0;"
+        >
+          • Приоритетная обработка запросов<br />
+          • Расширенные текстовые отчёты<br />
+          • Ранний доступ к новым таблицам и брендам
+        </p>
+      </div>
+
+      <div class="field">
+        <span data-i18n="reserve_modal_cryptomus_title">
+          Оплата через Cryptomus (web):
+        </span>
+        <p
+          data-i18n="reserve_modal_cryptomus_text"
+          style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
+        >
+          Откроется страница оплаты Cryptomus во встроенном браузере Telegram.
+        </p>
+        <button
+          id="modal-btn-reserve-cryptomus"
+          class="secondary wide"
+          data-i18n="reserve_modal_cryptomus_btn"
+        >
+          Оплатить через Cryptomus
+        </button>
+      </div>
+
+      <div class="field">
+        <span data-i18n="reserve_modal_cryptobot_title">
+          Оплата через Crypto Bot (крипта в Telegram):
+        </span>
+        <p
+          data-i18n="reserve_modal_cryptobot_text"
+          style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
+        >
+          Откроется окно с оплатой в @CryptoBot. После успешного платежа PRO
+          активируется автоматически.
+        </p>
+        <button
+          id="modal-btn-reserve-crypto-bot"
+          class="primary wide"
+          data-i18n="reserve_modal_cryptobot_btn"
+        >
+          Оплатить через Crypto Bot
+        </button>
+        <p id="modal-crypto-pay-url" class="reserve-url"></p>
+      </div>
+
+      <div class="field">
+        <span data-i18n="reserve_modal_gala_title">
+          Оплата токенами в GalaChain:
+        </span>
+        <p
+          id="modal-gala-payment-instruction"
+          data-i18n="reserve_modal_gala_text"
+          style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
+        >
+          Адрес и сумма подтянутся с сервера. Отправь платёж, затем нажми
+          «Я оплатил».
+        </p>
+        <button
+          id="modal-btn-gala-refresh"
+          class="secondary wide"
+          data-i18n="reserve_modal_gala_refresh_btn"
+        >
+          Обновить реквизиты GalaChain
+        </button>
+        <button
+          id="modal-btn-gala-check"
+          class="secondary wide"
+          style="margin-top:6px;"
+          data-i18n="reserve_modal_gala_check_btn"
+        >
+          Я оплатил, проверить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+     <!-- Экран выбора способа оценки -->
     <div class="screen screen-assessment" id="screen-assessment">
       <div class="header">
         <button class="back-btn" id="btn-back-from-assessment">←</button>
@@ -239,24 +367,26 @@
     </div>
 
      <!-- Экран: Таблицы редкости (бренды) -->
-<div class="screen" id="screen-rarity">
-  <header class="header">
-    <button class="back-btn" id="btn-back-from-rarity">←</button>
-    <h2>Таблицы редкости</h2>
-  </header>
-
-  <main class="content">
-    <!-- Кнопки брендов -->
-    <div class="brand-switcher brand-switcher--hidden">
-      <button class="brand-chip active" data-brand="agfa">Agfa</button>
-      <button class="brand-chip" data-brand="basf">Basf</button>
-      <button class="brand-chip" data-brand="denon">Denon</button>
-      <button class="brand-chip" data-brand="maxell">Maxell</button>
-      <button class="brand-chip" data-brand="sony">Sony</button>
-      <button class="brand-chip" data-brand="tdk">TDK</button>
+<div class="modal-overlay" id="rarity-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 data-i18n="menu_rarity">Таблицы</h2>
+      <button class="modal-close" id="rarity-modal-close">×</button>
     </div>
-     <!-- Таблица: AGFA -->
-<div class="field brand-table" data-brand="agfa" style="display: none;">
+
+    <div class="modal-content rarity-modal-content">
+      <!-- Переключатель брендов -->
+      <div class="brand-switcher">
+        <button class="brand-chip active" data-brand="agfa"><span>Agfa</span></button>
+        <button class="brand-chip" data-brand="basf"><span>BASF</span></button>
+        <button class="brand-chip" data-brand="denon"><span>Denon</span></button>
+        <button class="brand-chip" data-brand="maxell"><span>Maxell</span></button>
+        <button class="brand-chip" data-brand="sony"><span>Sony</span></button>
+        <button class="brand-chip" data-brand="tdk"><span>TDK</span></button>
+      </div>
+     
+      <!-- Таблица: AGFA -->
+<div class="field brand-table" data-brand="agfa">
   <span>Кассеты AGFA — серии, редкость и примерные цены</span>
 
   <div class="rarity-table">
@@ -323,7 +453,7 @@
 </div>
 
     <!-- Таблица: BASF -->
-<div class="field brand-table" data-brand="basf" style="display: none;">
+<div class="field brand-table" data-brand="basf">
   <span>Кассеты BASF — серии, редкость и примерные цены</span>
 
   <div class="rarity-table">
@@ -389,7 +519,7 @@
   </p>
 </div>
 <!-- Таблица: Denon -->
-<div class="field brand-table" data-brand="denon" style="display: none;">
+<div class="field brand-table" data-brand="denon">
   <span>Кассеты Denon — серии, редкость и примерные цены</span>
 
   <div class="rarity-table">
@@ -441,7 +571,7 @@
   </p>
 </div>
     <!-- Таблица: Maxell -->
-<div class="field brand-table" data-brand="maxell" style="display: none;">
+<div class="field brand-table" data-brand="maxell">
   <span>Кассеты Maxell — серии, редкость и примерные цены</span>
 
   <div class="rarity-table">
@@ -573,7 +703,8 @@
       </p>
     </div>
     <!-- Таблица: TDK -->
-<div class="field brand-table" data-brand="tdk" style="display: none;">
+<!-- Таблица: TDK -->
+<div class="field brand-table" data-brand="tdk">
   <span>Кассеты TDK — серии, редкость и примерные цены</span>
 
   <div class="rarity-table">
@@ -592,16 +723,44 @@
     </div>
 
     <div class="rarity-row">
+      <div class="rarity-label">OD</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I (Super Ferric)</span>
+        <span class="rarity-years">Годы: кон. 70‑х–нач. 80‑х</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~10–25+ €</span>
+        <span class="rarity-open">Открытая: ~4–8+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Ранняя суперферритовая линейка до AD/AR; встречается заметно реже обычных D/AD, особенно ранние японские выпуски.
+      </div>
+    </div>
+
+    <div class="rarity-row">
       <div class="rarity-label">AD</div>
       <div class="rarity-meta">
         <span class="rarity-type">Тип: I (High)</span>
-        <span class="rarity-years">Годы: 70‑е–80‑е</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
         <span class="rarity-score">Редкость: 2–3</span>
         <span class="rarity-price">NOS: ~3–7 €</span>
         <span class="rarity-open">Открытая: ~1–3 €</span>
       </div>
       <div class="rarity-desc">
-        Усиленный феррик, по измерениям не сильно уступает ранним SA; ценится как лучший Type I у TDK своего времени.
+        Усиленный феррик, по измерениям не сильно уступает ранним SA; один из лучших Type I у TDK своего времени.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">AR</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: I (High / Super Ferric)</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~8–18+ €</span>
+        <span class="rarity-open">Открытая: ~3–7+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Топовый Type I поверх AD; ближе к superferric, поздние AR и AR‑X ценятся за звук и редкость.
       </div>
     </div>
 
@@ -615,7 +774,7 @@
         <span class="rarity-open">Открытая: ~2–4 €</span>
       </div>
       <div class="rarity-desc">
-        Классический хром TDK, один из самых популярных Type II; большой разброс по ценам в зависимости от года и дизайна.
+        Классический хром TDK; цены зависят от поколения, рынка и дизайна.
       </div>
     </div>
 
@@ -623,22 +782,113 @@
       <div class="rarity-label">SA‑X</div>
       <div class="rarity-meta">
         <span class="rarity-type">Тип: II (Super, dual layer)</span>
-        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-years">Годы: 80‑е–2000‑е</span>
         <span class="rarity-score">Редкость: 3–4</span>
         <span class="rarity-price">NOS: ~12–25+ €</span>
         <span class="rarity-open">Открытая: ~4–8+ €</span>
       </div>
       <div class="rarity-desc">
-        Топовый хром TDK, двойное покрытие; по отзывам и тестам считается одним из лучших Type II на рынке.
+        Топовый хром TDK с двухслойным покрытием; считается одним из лучших Type II на рынке.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">SA‑XS</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: II (Super)</span>
+        <span class="rarity-years">Годы: 90‑е–2000‑е</span>
+        <span class="rarity-score">Редкость: 4</span>
+        <span class="rarity-price">NOS: ~20–35+ €</span>
+        <span class="rarity-open">Открытая: ~7–12+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Ещё более продвинутая версия SA‑X; редкая линейка с устойчивым спросом.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">MA</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: IV (Metal)</span>
+        <span class="rarity-years">Годы: 80‑е–2000‑е</span>
+        <span class="rarity-score">Редкость: 3–4</span>
+        <span class="rarity-price">NOS: ~15–30+ €</span>
+        <span class="rarity-open">Открытая: ~5–10+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Основная металлическая линейка TDK; ценится и за звук, и за разнообразие корпусов.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">MA‑X</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: IV (Metal, high grade)</span>
+        <span class="rarity-years">Годы: 80‑е–90‑е</span>
+        <span class="rarity-score">Редкость: 4</span>
+        <span class="rarity-price">NOS: ~25–45+ €</span>
+        <span class="rarity-open">Открытая: ~8–15+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Усиленная версия MA с улучшенными характеристиками и более дорогим позиционированием.
+      </div>
+    </div>
+
+    <div class="rarity-row">
+      <div class="rarity-label">MA‑XG</div>
+      <div class="rarity-meta">
+        <span class="rarity-type">Тип: IV (Metal, flagship)</span>
+        <span class="rarity-years">Годы: 1990‑е</span>
+        <span class="rarity-score">Редкость: 5</span>
+        <span class="rarity-price">NOS: ~50–100+ €</span>
+        <span class="rarity-open">Открытая: ~20–40+ €</span>
+      </div>
+      <div class="rarity-desc">
+        Флагманская металлическая серия с тяжёлым корпусом; одни из самых дорогих и желанных TDK.
       </div>
     </div>
   </div>
 
+  <!-- WOW-блок SA-X -->
+  <div class="tape-wow" id="tape-wow-sa-x">
+    <div class="tape-wow-image-wrap">
+      <img
+        src="assets/tdk/tdk_sa-x.jpg"
+        alt="TDK SA-X 90"
+        class="tape-wow-image"
+      />
+    </div>
+
+    <div class="tape-wow-text">
+      <h3 class="tape-wow-title" id="wow-sa-x-title"></h3>
+      <p class="tape-wow-subtitle" id="wow-sa-x-subtitle"></p>
+      <p class="tape-wow-detail" id="wow-sa-x-detail"></p>
+    </div>
+  </div>
+
+  <!-- WOW-блок MA-XG -->
+  <div class="tape-wow" id="tape-wow-ma-xg">
+    <div class="tape-wow-image-wrap">
+      <img
+        src="assets/tdk/tdk_ma-xg.jpg"
+        alt="TDK MA-XG 90"
+        class="tape-wow-image"
+      />
+    </div>
+
+    <div class="tape-wow-text">
+      <h3 class="tape-wow-title" id="wow-ma-xg-title"></h3>
+      <p class="tape-wow-subtitle" id="wow-ma-xg-subtitle"></p>
+      <p class="tape-wow-detail" id="wow-ma-xg-detail"></p>
+    </div>
+  </div>
+
   <p class="rarity-note">
-    Цены NOS указаны как ориентиры для запечатанных кассет обычной длины (60–90 мин). Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии; особо редкие ранние SA‑X / спецверсии могут стоить заметно дороже.
+    Цены NOS указаны как ориентиры для запечатанных кассет 60–90 мин. Для открытых ориентируемся примерно на 0.3× от NOS‑цен при хорошем состоянии; ранние и спец‑версии могут стоить заметно дороже.
   </p>
 </div>
 
+<script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
 <script src="main.js"></script>
   </body>
 </html>

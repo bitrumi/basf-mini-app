@@ -4,13 +4,15 @@ const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const crypto = require('crypto'); // для подписи Cryptomus
-const { createPayInstance, Asset } = require('@dotred/crypto-pay'); // <── Crypto Pay [web:129]
+// Crypto Pay временно отключаем, чтобы не падал сервер
+// const { createPayInstance, Asset } = require('@dotred/crypto-pay');
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 app.use(cors());
+
 const CRYPTOMUS_MERCHANT_ID = process.env.CRYPTOMUS_MERCHANT_ID;
 const CRYPTOMUS_API_KEY = process.env.CRYPTOMUS_API_KEY;
 const DISCOGS_USER_TOKEN = process.env.DISCOGS_USER_TOKEN;
@@ -18,13 +20,14 @@ const DISCOGS_USER_AGENT =
   process.env.DISCOGS_USER_AGENT || 'audiograde/1.0';
 
 // ==== Crypto Pay API (Crypto Bot) ====
+// Пока отключаем, чтобы не ломать старт сервера
 const CRYPTO_PAY_API_TOKEN = process.env.CRYPTO_PAY_API_TOKEN;
 const CRYPTO_PAY_ENV = process.env.CRYPTO_PAY_ENV || 'main';
 
-// Инициализация клиента Crypto Pay [web:129]
-const cryptoPay =
-  CRYPTO_PAY_API_TOKEN &&
-  createPayInstance(CRYPTO_PAY_API_TOKEN, CRYPTO_PAY_ENV);
+// Инициализация клиента Crypto Pay (временно закомментировано)
+// const cryptoPay =
+//   CRYPTO_PAY_API_TOKEN &&
+//   createPayInstance(CRYPTO_PAY_API_TOKEN, CRYPTO_PAY_ENV);
 
 // Простая in‑memory «таблица» userId -> { invoiceId, status }
 const invoicesByUser = new Map();
@@ -696,91 +699,9 @@ app.post('/analyze', async (req, res) => {
   });
 });
 
-// === Crypto Bot: создать инвойс ===
-app.post('/api/cryptobot/create-invoice', async (req, res) => {
-  console.log('create-invoice req.body =', req.body);
-
-  try {
-    if (!cryptoPay) {
-      console.log('cryptoPay instance is missing');
-      return res
-        .status(500)
-        .json({ error: 'Crypto Pay API не инициализирован (нет токена)' });
-    }
-
-    const { userId } = req.body || {};
-    if (!userId) {
-      console.log('create-invoice: userId is missing');
-      return res.status(400).json({ error: 'userId is required' });
-    }
-
-    const amount = '5';
-    const asset = Asset.USDT;
-
-    const invoice = await cryptoPay.createInvoice({
-      asset,
-      amount,
-      description: 'BASF BOT PRO',
-      payload: { userId: String(userId) },
-    });
-
-    invoicesByUser.set(String(userId), {
-      invoiceId: invoice.invoice_id,
-      status: 'pending',
-    });
-
-    return res.json({ payUrl: invoice.pay_url });
-  } catch (e) {
-    console.error('CryptoPay createInvoice error:', e);
-    return res.status(500).json({ error: 'CryptoPay createInvoice failed' });
-  }
-});
-
-// === Crypto Bot: проверка оплаты ===
-app.post('/api/cryptobot/check-payment', async (req, res) => {
-  try {
-    if (!cryptoPay) {
-      return res
-        .status(500)
-        .json({ error: 'Crypto Pay API не инициализирован (нет токена)' });
-    }
-
-    const { userId } = req.body || {};
-    if (!userId) {
-      return res.status(400).json({ error: 'userId is required' });
-    }
-
-    const info = invoicesByUser.get(String(userId));
-    if (!info) {
-      return res.json({ paid: false, error: 'Invoice not found for user' });
-    }
-
-    const { invoiceId } = info;
-
-    const result = await cryptoPay.getInvoices({
-      invoice_ids: [invoiceId],
-    });
-
-    const invoice = result.items?.[0];
-    if (!invoice) {
-      return res.json({ paid: false, error: 'Invoice not found in API' });
-    }
-
-    if (invoice.status === 'paid') {
-      invoicesByUser.set(String(userId), {
-        invoiceId,
-        status: 'paid',
-      });
-      // TODO: здесь отметить пользователя как PRO в реальной БД
-      return res.json({ paid: true });
-    }
-
-    return res.json({ paid: false, status: invoice.status });
-  } catch (e) {
-    console.error('CryptoPay getInvoices error:', e);
-    return res.status(500).json({ error: 'CryptoPay getInvoices failed' });
-  }
-});
+// === Crypto Bot endpoints временно отключаем ===
+// app.post('/api/cryptobot/create-invoice', async (req, res) => { ... });
+// app.post('/api/cryptobot/check-payment', async (req, res) => { ... });
 
 // === Cryptomus: утилита для подписи ===
 function makeCryptomusSign(body, apiKey) {
@@ -825,7 +746,7 @@ app.post('/api/cryptomus/create-payment', async (req, res) => {
           sign,
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
 
     const data = resp.data;
@@ -839,7 +760,7 @@ app.post('/api/cryptomus/create-payment', async (req, res) => {
   } catch (e) {
     console.error(
       'Cryptomus create-payment error:',
-      e.response?.data || e.message
+      e.response?.data || e.message,
     );
     return res
       .status(500)

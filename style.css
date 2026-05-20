@@ -137,26 +137,35 @@ body {
 
 /* Выпадающий список языков */
 .lang-dropdown {
- position: relative;
-  width: auto;              /* вместо max-content + min-width */
+  position: relative;
+  width: auto;
   min-width: 0;
 
   background: rgba(5, 5, 5, 0.96);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85);
-  padding: 2px 2px;         /* было 4px – меньше воздуха */
-
-  opacity: 0;
-  transform: translateY(-6px);
-  pointer-events: none;
+  padding: 2px 2px;
 
   display: flex;
   flex-direction: column;
 
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  visibility: hidden; /* добавили */
+
   transition:
     opacity 0.22s ease-out,
-    transform 0.22s ease-out;
+    transform 0.22s ease-out,
+    visibility 0.22s ease-out;
+}
+
+.lang-dropdown.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible; /* добавили */
 }
 
 /* Состояние открытого дропа */
@@ -203,24 +212,24 @@ body {
   transform: translateY(0);
 }
 
-/* Задержки по индексам для "лесенки" */
-.lang-dropdown.open .lang-option:nth-child(1) {
+/* Задержки по индексам для "лесенки" — на самих опциях */
+.lang-option:nth-child(1) {
   transition-delay: 0.12s;
 }
 
-.lang-dropdown.open .lang-option:nth-child(2) {
+.lang-option:nth-child(2) {
   transition-delay: 0.18s;
 }
 
-.lang-dropdown.open .lang-option:nth-child(3) {
+.lang-option:nth-child(3) {
   transition-delay: 0.22s;
 }
 
-.lang-dropdown.open .lang-option:nth-child(4) {
+.lang-option:nth-child(4) {
   transition-delay: 0.30s;
 }
 
-.lang-dropdown.open .lang-option:nth-child(5) {
+.lang-option:nth-child(5) {
   transition-delay: 0.38s;
 }
 /* Нижняя панель меню */
@@ -512,6 +521,30 @@ button.wide {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* стартовое состояние: скрыты и чуть смещены вниз */
+.brand-table .rarity-row {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.45s ease-out;
+}
+
+/* когда у таблицы есть класс .show-animated — включаем */
+.brand-table.show-animated .rarity-row {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Задержки по индексам для "лесенки" */
+.brand-table.show-animated .rarity-row:nth-child(1) { transition-delay: 0.24s; }
+.brand-table.show-animated .rarity-row:nth-child(2) { transition-delay: 0.48s; }
+.brand-table.show-animated .rarity-row:nth-child(3) { transition-delay: 0.72s; }
+.brand-table.show-animated .rarity-row:nth-child(4) { transition-delay: 0.96s; }
+.brand-table.show-animated .rarity-row:nth-child(5) { transition-delay: 0.38s; }
+.brand-table.show-animated .rarity-row:nth-child(6) { transition-delay: 0.94s; }
+.brand-table.show-animated .rarity-row:nth-child(7) { transition-delay: 1.06s; }
+
 .rarity-label {
   font-weight: 600;
   font-size: 13px;
@@ -544,6 +577,80 @@ button.wide {
   font-size: 11px;
   opacity: 0.8;
 }
+.tape-wow {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  background: radial-gradient(circle at top left, #2a2a3a 0, #111319 55%, #08090d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tape-wow-image-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+  background: #05060a;
+}
+
+.tape-wow-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain; /* чтобы разные фотки смотрелись одинаково */
+}
+
+.tape-wow-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.tape-wow.loaded .tape-wow-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tape-wow-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.tape-wow-subtitle {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.tape-wow-detail {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* На широкой ширине — картинка и текст в одну строку */
+@media (min-width: 480px) {
+  .tape-wow {
+    flex-direction: row;
+  }
+
+  .tape-wow-image-wrap {
+    flex: 0 0 45%;
+  }
+
+  .tape-wow-text {
+    flex: 1;
+  }
+}
+
 /* Переключатель брендов в таблицах */
 .brand-switcher {
   display: flex;
@@ -591,7 +698,7 @@ button.wide {
 }
 
 /* “Окошко” кассеты */
-brand-chip::before {
+.brand-chip::before {
   content: '';
   position: absolute;
   inset: 6px 8px; /* здесь задаются границы внутреннего прямоугольника */
@@ -601,6 +708,7 @@ brand-chip::before {
     radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.12), transparent),
     rgba(0, 0, 0, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 0;
 }
 
 /* Катушки: строго по центру, по ширине до границ “окна” */
@@ -616,20 +724,22 @@ brand-chip::before {
     radial-gradient(circle, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0.9) 40%, transparent 45%) left center / 8px 8px no-repeat,
     radial-gradient(circle, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0.9) 40%, transparent 45%) right center / 8px 8px no-repeat;
   opacity: 0.9;
+  z-index: 0;
 }
 
 /* Текст бренда — поверх “кассеты” */
 .brand-chip span,
 .brand-chip-label {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   color: #ffffff;                    /* чисто белый текст */
   text-shadow: 0 0 3px rgba(0,0,0,0.8); /* лёгкое свечение для читаемости */
 }
 
 /* Чтобы существующий текст не пропал, костыль: */
 .brand-chip {
-  text-transform: none;
+  position: relative;
+  z-index: 1;
 }
 
 .brand-chip.active {
@@ -663,7 +773,7 @@ brand-chip::before {
 }
 /* Экран таблиц редкости — растянуть контент по ширине */
 #screen-rarity .content {
-  max-width: 480;
+  max-width: 480px;
   width: 100%;
   margin: 0 auto;
   padding: 16px 6px 24px; /* чуть меньше паддинги слева/справа */
@@ -689,4 +799,131 @@ brand-chip::before {
     opacity: 1;
     transform: translateY(0);
   }
+}
+/* ===== МОДАЛКА (общий стиль) ===== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex; /* всегда flex */
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 100;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 1.5s ease-out,
+    visibility 1.5s ease-out;
+}
+
+/* вместо .hidden используем .show */
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 90%;
+  max-width: 420px;
+  border-radius: 16px;
+  background: rgba(15, 15, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  color: #fff;
+
+  transform: translateY(12px) scale(0.98);
+  opacity: 0;
+  transition:
+    opacity 0.75s ease-out,
+    transform 0.75s ease-out;
+}
+
+/* когда оверлей активен, карточка плавно «выезжает» */
+.modal-overlay.show .modal-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Контент модалки таблиц: скролл внутри карточки */
+.rarity-modal-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Кнопка "Оплатить через Crypto Bot" в модалке резерва */
+#modal-btn-reserve-crypto-bot {
+  background: linear-gradient(135deg, #ff6b3d, #f4a55b); /* как у кнопки "Найти" */
+  color: #f9f3f3;
+  font-weight: 600;
+  border: none;
+  border-radius: 3px; /* меньшее закругление, чем по умолчанию */
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.music-search {
+  display: flex;
+  gap: 8px;
+}
+
+.music-search input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 10, 15, 0.9);
+  color: #fff;
+}
+
+.music-search button {
+  padding: 8px 14px;
+  border-radius: 3px;
+  border: none;
+  background: linear-gradient(135deg, #ff6b3d, #f4a55b);
+  color: #f9f3f3;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.music-results {
+  min-height: 40px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.music-results .placeholder {
+  margin: 0;
+  opacity: 0.75;
 }
