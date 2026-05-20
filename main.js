@@ -276,6 +276,10 @@ function fillWowBlockForMAXG() {
 
 // --- ОБРАБОТЧИКИ ПОСЛЕ ЗАГРУЗКИ DOM ---
 window.addEventListener('DOMContentLoaded', () => {
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.expand();
+  }
   fillWowBlockForMAXG();
   fillWowBlockForSAX();
 
