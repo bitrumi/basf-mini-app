@@ -351,6 +351,41 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+   // --- МОДАЛКА ОЦЕНКИ ---
+  const assessmentModal = document.getElementById('assessment-modal');
+  const assessmentModalClose = document.getElementById('assessment-modal-close');
+  const modalAssessmentPhoto = document.getElementById('modal-assessment-photo');
+  const modalAssessmentManual = document.getElementById('modal-assessment-manual');
+
+  function openAssessmentModal() {
+    if (assessmentModal) assessmentModal.classList.add('show');
+  }
+
+  function closeAssessmentModal() {
+    if (assessmentModal) assessmentModal.classList.remove('show');
+  }
+
+  if (assessmentModal && assessmentModalClose) {
+    assessmentModalClose.addEventListener('click', closeAssessmentModal);
+    assessmentModal.addEventListener('click', (e) => {
+      if (e.target === assessmentModal) closeAssessmentModal();
+    });
+  }
+
+  if (modalAssessmentPhoto) {
+    modalAssessmentPhoto.addEventListener('click', () => {
+      closeAssessmentModal();
+      showScreen('screen-input-photo');
+    });
+  }
+
+  if (modalAssessmentManual) {
+    modalAssessmentManual.addEventListener('click', () => {
+      closeAssessmentModal();
+      showScreen('screen-input-manual');
+    });
+  }
+
   // --- МОДАЛКА МУЗЫКИ ---
   const musicModal = document.getElementById('music-modal');
   const musicModalClose = document.getElementById('music-modal-close');
@@ -590,8 +625,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const section = item.dataset.section;
       console.log('MENU click =', section);
 
-      if (section === 'assessment') {
-        showScreen('screen-assessment');
+     if (section === 'assessment') {
+        openAssessmentModal();
         setActiveMenu('assessment');
       } else if (section === 'music') {
         openMusicModal();
