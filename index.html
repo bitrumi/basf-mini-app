@@ -7,311 +7,294 @@
 
     <link rel="stylesheet" href="style.css" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   </head>
   <body>
     <!-- Экран 1: старт / фон -->
-<div class="screen screen-start" id="screen-start">
-  <div class="background"></div>
+    <div class="screen screen-start" id="screen-start">
+      <div class="background"></div>
 
-  <div class="start-inner">
-    <!-- Языковой переключатель в правом верхнем углу -->
-    <div class="lang-switcher">
-      <button class="lang-current" id="lang-toggle">
-        RU
-      </button>
-      <div class="lang-dropdown" id="lang-dropdown">
-        <button class="lang-option" data-lang="ru">RU</button>
-        <button class="lang-option" data-lang="en">EN</button>
-        <button class="lang-option" data-lang="zh">中文</button>
-        <button class="lang-option" data-lang="ja">日本語</button>
-        <button class="lang-option" data-lang="ko">한국어</button>
-      </div>
-    </div>
-
-    <div class="hero">
-      <h1 class="hero-title" data-i18n="start_title">BASF BOT</h1>
-      <p class="hero-subtitle" data-i18n="start_subtitle">
-        Оценка кассет, CD и винила
-      </p>
-    </div>
-
-    <div class="bottom-menu">
-      <div class="menu-item active" data-section="assessment">
-        <span class="menu-label" data-i18n="menu_assessment">Оценка</span>
-      </div>
-      <div class="menu-item" data-section="music">
-        <span class="menu-label" data-i18n="menu_music">Музыка</span>
-      </div>
-      <div class="menu-item" data-section="rarity">
-        <span class="menu-label" data-i18n="menu_rarity">Таблицы</span>
-      </div>
-      <div class="menu-item" data-section="reserve">
-        <span class="menu-label" data-i18n="menu_reserve">Резерв</span>
-      </div>
-    </div>
-  </div>
-</div>
-    
-    <!-- Модальное окно: Музыка -->
-<div class="modal-overlay" id="music-modal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h2 data-i18n="music_modal_title">Музыка</h2>
-      <button class="modal-close" id="music-modal-close">×</button>
-    </div>
-
-    <div class="modal-content">
-      <p class="hint" data-i18n="music_modal_hint">
-        Введи название трека, исполнителя или кусок текста песни.
-      </p>
-
-      <div class="music-search">
-        <input
-          id="music-query"
-          type="text"
-          placeholder="Каста — Громче воды"
-        />
-        <button id="music-search-btn" data-i18n="music_modal_search_btn">
-          Найти
-        </button>
-      </div>
-
-      <div id="music-results" class="music-results">
-        <p class="placeholder" data-i18n="music_modal_placeholder">
-          Скоро здесь появится поиск по Deezer/Spotify. Пока это заглушка.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-     
-       <!-- Модальное окно: Оценка -->
-<div class="modal-overlay" id="assessment-modal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h2>Оценка кассет</h2>
-      <button class="modal-close" id="assessment-modal-close">×</button>
-    </div>
-
-    <div class="modal-content">
-      <div class="field">
-        <span>Выберите способ оценки</span>
-        <div class="assessment-options">
-          <button class="primary" id="modal-assessment-photo">
-            Оценить по фото
+      <div class="start-inner">
+        <!-- Языковой переключатель в правом верхнем углу -->
+        <div class="lang-switcher">
+          <button class="lang-current" id="lang-toggle">
+            RU
           </button>
-          <button class="secondary" id="modal-assessment-manual">
-            Оценить вручную
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-option" data-lang="ru">RU</button>
+            <button class="lang-option" data-lang="en">EN</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="ja">日本語</button>
+            <button class="lang-option" data-lang="ko">한국어</button>
+          </div>
+        </div>
+
+        <div class="hero">
+          <h1 class="hero-title" data-i18n="start_title">BASF BOT</h1>
+          <p class="hero-subtitle" data-i18n="start_subtitle">
+            Оценка кассет, CD и винила
+          </p>
+        </div>
+
+        <div class="bottom-menu">
+          <div class="menu-item active" data-section="assessment">
+            <span class="menu-label" data-i18n="menu_assessment">Оценка</span>
+          </div>
+          <div class="menu-item" data-section="music">
+            <span class="menu-label" data-i18n="menu_music">Музыка</span>
+          </div>
+          <div class="menu-item" data-section="rarity">
+            <span class="menu-label" data-i18n="menu_rarity">Таблицы</span>
+          </div>
+          <div class="menu-item" data-section="reserve">
+            <span class="menu-label" data-i18n="menu_reserve">Резерв</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно: Музыка -->
+    <div class="modal-overlay" id="music-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 data-i18n="music_modal_title">Музыка</h2>
+          <button class="modal-close" id="music-modal-close">×</button>
+        </div>
+
+        <div class="modal-content">
+          <p class="hint" data-i18n="music_modal_hint">
+            Введи название трека, исполнителя или кусок текста песни.
+          </p>
+
+          <div class="music-search">
+            <input
+              id="music-query"
+              type="text"
+              placeholder="Каста — Громче воды"
+            />
+            <button id="music-search-btn" data-i18n="music_modal_search_btn">
+              Найти
+            </button>
+          </div>
+
+          <div id="music-results" class="music-results">
+            <p class="placeholder" data-i18n="music_modal_placeholder">
+              Скоро здесь появится поиск по Deezer/Spotify. Пока это заглушка.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно: Оценка (выбор способа) -->
+    <div class="modal-overlay" id="assessment-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Оценка кассет</h2>
+          <button class="modal-close" id="assessment-modal-close">×</button>
+        </div>
+
+        <div class="modal-content">
+          <div class="field">
+            <span>Выберите способ оценки</span>
+            <div class="assessment-options">
+              <button class="primary wide" id="modal-assessment-photo">
+                Оценить по фото
+              </button>
+              <button class="secondary wide" id="modal-assessment-manual">
+                Оценить вручную
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно: Оценка по фото -->
+    <div class="modal-overlay" id="assessment-photo-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Оценка по фото</h2>
+          <button class="modal-close" id="assessment-photo-modal-close">×</button>
+        </div>
+
+        <div class="modal-content">
+          <label class="field">
+            <span>Фото носителя (пока опционально):</span>
+            <input type="file" id="input-photo" accept="image/*" />
+          </label>
+
+          <label class="field">
+            <span>Исполнитель / релиз:</span>
+            <input
+              type="text"
+              id="input-artist-title"
+              placeholder="Каста — Что нам делать в Греции"
+            />
+          </label>
+
+          <label class="field">
+            <span>Тип носителя:</span>
+            <select id="select-media">
+              <option value="cassette">Cassette</option>
+              <option value="cd">CD</option>
+              <option value="vinyl">Vinyl</option>
+            </select>
+          </label>
+
+          <div class="field">
+            <span>Состояние (grade):</span>
+            <div class="grade-buttons" id="grade-buttons">
+              <button type="button" data-grade="M">M</button>
+              <button type="button" data-grade="NM">NM</button>
+              <button type="button" data-grade="VG+">VG+</button>
+              <button type="button" data-grade="VG">VG</button>
+              <button type="button" data-grade="G">G</button>
+            </div>
+          </div>
+
+          <button id="btn-calc-photo" class="primary wide">
+            Рассчитать
           </button>
         </div>
       </div>
     </div>
-  </div>
-</div>
-  
-     <!-- Модальное окно: Резерв / PRO -->
-<div class="modal-overlay" id="reserve-modal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h2 data-i18n="reserve_modal_title">Резерв / PRO доступ</h2>
-      <button class="modal-close" id="reserve-modal-close">×</button>
-    </div>
 
-    <div class="modal-content">
-      <div class="field">
-        <span data-i18n="reserve_modal_pro_title">Что даёт BASF BOT PRO:</span>
-        <p
-          data-i18n="reserve_modal_pro_bullets"
-          style="font-size:13px; opacity:0.85; margin:4px 0 0;"
-        >
-          • Приоритетная обработка запросов<br />
-          • Расширенные текстовые отчёты<br />
-          • Ранний доступ к новым таблицам и брендам
-        </p>
-      </div>
+    <!-- Модальное окно: Оценка вручную -->
+    <div class="modal-overlay" id="assessment-manual-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Ввод данных вручную</h2>
+          <button class="modal-close" id="assessment-manual-modal-close">×</button>
+        </div>
 
-      <div class="field">
-        <span data-i18n="reserve_modal_cryptomus_title">
-          Оплата через Cryptomus (web):
-        </span>
-        <p
-          data-i18n="reserve_modal_cryptomus_text"
-          style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
-        >
-          Откроется страница оплаты Cryptomus во встроенном браузере Telegram.
-        </p>
-        <button
-          id="modal-btn-reserve-cryptomus"
-          class="secondary wide"
-          data-i18n="reserve_modal_cryptomus_btn"
-        >
-          Оплатить через Cryptomus
-        </button>
-      </div>
+        <div class="modal-content">
+          <label class="field">
+            <span>Исполнитель / релиз:</span>
+            <input
+              type="text"
+              id="input-artist-title-manual"
+              placeholder="Каста — Что нам делать в Греции"
+            />
+          </label>
 
-      <div class="field">
-        <span data-i18n="reserve_modal_cryptobot_title">
-          Оплата через Crypto Bot (крипта в Telegram):
-        </span>
-        <p
-          data-i18n="reserve_modal_cryptobot_text"
-          style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
-        >
-          Откроется окно с оплатой в @CryptoBot. После успешного платежа PRO
-          активируется автоматически.
-        </p>
-        <button
-          id="modal-btn-reserve-crypto-bot"
-          class="primary wide"
-          data-i18n="reserve_modal_cryptobot_btn"
-        >
-          Оплатить через Crypto Bot
-        </button>
-        <p id="modal-crypto-pay-url" class="reserve-url"></p>
-      </div>
+          <label class="field">
+            <span>Тип носителя:</span>
+            <select id="select-media-manual">
+              <option value="cassette">Cassette</option>
+              <option value="cd">CD</option>
+              <option value="vinyl">Vinyl</option>
+            </select>
+          </label>
 
-      <div class="field">
-        <span data-i18n="reserve_modal_gala_title">
-          Оплата токенами в GalaChain:
-        </span>
-        <p
-          id="modal-gala-payment-instruction"
-          data-i18n="reserve_modal_gala_text"
-          style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
-        >
-          Адрес и сумма подтянутся с сервера. Отправь платёж, затем нажми
-          «Я оплатил».
-        </p>
-        <button
-          id="modal-btn-gala-refresh"
-          class="secondary wide"
-          data-i18n="reserve_modal_gala_refresh_btn"
-        >
-          Обновить реквизиты GalaChain
-        </button>
-        <button
-          id="modal-btn-gala-check"
-          class="secondary wide"
-          style="margin-top:6px;"
-          data-i18n="reserve_modal_gala_check_btn"
-        >
-          Я оплатил, проверить
-        </button>
+          <div class="field">
+            <span>Состояние (grade):</span>
+            <div class="grade-buttons" id="grade-buttons-manual">
+              <button type="button" data-grade="M">M</button>
+              <button type="button" data-grade="NM">NM</button>
+              <button type="button" data-grade="VG+">VG+</button>
+              <button type="button" data-grade="VG">VG</button>
+              <button type="button" data-grade="G">G</button>
+            </div>
+          </div>
+
+          <button id="btn-calc-manual" class="primary wide">
+            Рассчитать
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-     <!-- Экран выбора способа оценки -->
-    <div class="screen screen-assessment" id="screen-assessment">
-      <div class="header">
-        <button class="back-btn" id="btn-back-from-assessment">←</button>
-        <h2>Оценка кассет</h2>
-      </div>
+    <!-- Модальное окно: Резерв / PRO -->
+    <div class="modal-overlay" id="reserve-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 data-i18n="reserve_modal_title">Резерв / PRO доступ</h2>
+          <button class="modal-close" id="reserve-modal-close">×</button>
+        </div>
 
-      <div class="content">
-        <div class="field">
-          <span>Выберите способ оценки</span>
-          <div class="assessment-options">
-            <button class="primary" data-action="photo">Оценить по фото</button>
-            <button class="secondary" data-action="manual">
-              Оценить вручную
+        <div class="modal-content">
+          <div class="field">
+            <span data-i18n="reserve_modal_pro_title">Что даёт BASF BOT PRO:</span>
+            <p
+              data-i18n="reserve_modal_pro_bullets"
+              style="font-size:13px; opacity:0.85; margin:4px 0 0;"
+            >
+              • Приоритетная обработка запросов<br />
+              • Расширенные текстовые отчёты<br />
+              • Ранний доступ к новым таблицам и брендам
+            </p>
+          </div>
+
+          <div class="field">
+            <span data-i18n="reserve_modal_cryptomus_title">
+              Оплата через Cryptomus (web):
+            </span>
+            <p
+              data-i18n="reserve_modal_cryptomus_text"
+              style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
+            >
+              Откроется страница оплаты Cryptomus во встроенном браузере Telegram.
+            </p>
+            <button
+              id="modal-btn-reserve-cryptomus"
+              class="secondary wide"
+              data-i18n="reserve_modal_cryptomus_btn"
+            >
+              Оплатить через Cryptomus
+            </button>
+          </div>
+
+          <div class="field">
+            <span data-i18n="reserve_modal_cryptobot_title">
+              Оплата через Crypto Bot (крипта в Telegram):
+            </span>
+            <p
+              data-i18n="reserve_modal_cryptobot_text"
+              style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
+            >
+              Откроется окно с оплатой в @CryptoBot. После успешного платежа PRO
+              активируется автоматически.
+            </p>
+            <button
+              id="modal-btn-reserve-crypto-bot"
+              class="primary wide"
+              data-i18n="reserve_modal_cryptobot_btn"
+            >
+              Оплатить через Crypto Bot
+            </button>
+            <p id="modal-crypto-pay-url" class="reserve-url"></p>
+          </div>
+
+          <div class="field">
+            <span data-i18n="reserve_modal_gala_title">
+              Оплата токенами в GalaChain:
+            </span>
+            <p
+              id="modal-gala-payment-instruction"
+              data-i18n="reserve_modal_gala_text"
+              style="font-size:13px; opacity:0.85; margin:4px 0 8px;"
+            >
+              Адрес и сумма подтянутся с сервера. Отправь платёж, затем нажми
+              «Я оплатил».
+            </p>
+            <button
+              id="modal-btn-gala-refresh"
+              class="secondary wide"
+              data-i18n="reserve_modal_gala_refresh_btn"
+            >
+              Обновить реквизиты GalaChain
+            </button>
+            <button
+              id="modal-btn-gala-check"
+              class="secondary wide"
+              style="margin-top:6px;"
+              data-i18n="reserve_modal_gala_check_btn"
+            >
+              Я оплатил, проверить
             </button>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Экран 2: ввод данных (по фото) -->
-    <div class="screen screen-input" id="screen-input-photo">
-      <header class="header">
-        <button class="back-btn" id="btn-back-from-photo">←</button>
-        <h2>Оценка по фото</h2>
-      </header>
-
-      <main class="content">
-        <label class="field">
-          <span>Фото носителя (пока опционально):</span>
-          <input type="file" id="input-photo" accept="image/*" />
-        </label>
-
-        <label class="field">
-          <span>Исполнитель / релиз:</span>
-          <input
-            type="text"
-            id="input-artist-title"
-            placeholder="Каста — Что нам делать в Греции"
-          />
-        </label>
-
-        <label class="field">
-          <span>Тип носителя:</span>
-          <select id="select-media">
-            <option value="cassette">Cassette</option>
-            <option value="cd">CD</option>
-            <option value="vinyl">Vinyl</option>
-          </select>
-        </label>
-
-        <div class="field">
-          <span>Состояние (grade):</span>
-          <div class="grade-buttons" id="grade-buttons">
-            <button type="button" data-grade="M">M</button>
-            <button type="button" data-grade="NM">NM</button>
-            <button type="button" data-grade="VG+">VG+</button>
-            <button type="button" data-grade="VG">VG</button>
-            <button type="button" data-grade="G">G</button>
-          </div>
-        </div>
-
-        <button id="btn-calc-photo" class="primary wide">
-          Рассчитать
-        </button>
-      </main>
-    </div>
-
-    <!-- Экран 2b: ввод вручную -->
-    <div class="screen screen-input" id="screen-input-manual">
-      <header class="header">
-        <button class="back-btn" id="btn-back-from-manual">←</button>
-        <h2>Ввод данных вручную</h2>
-      </header>
-
-      <main class="content">
-        <label class="field">
-          <span>Исполнитель / релиз:</span>
-          <input
-            type="text"
-            id="input-artist-title-manual"
-            placeholder="Каста — Что нам делать в Греции"
-          />
-        </label>
-
-        <label class="field">
-          <span>Тип носителя:</span>
-          <select id="select-media-manual">
-            <option value="cassette">Cassette</option>
-            <option value="cd">CD</option>
-            <option value="vinyl">Vinyl</option>
-          </select>
-        </label>
-
-        <div class="field">
-          <span>Состояние (grade):</span>
-          <div class="grade-buttons" id="grade-buttons-manual">
-            <button type="button" data-grade="M">M</button>
-            <button type="button" data-grade="NM">NM</button>
-            <button type="button" data-grade="VG+">VG+</button>
-            <button type="button" data-grade="VG">VG</button>
-            <button type="button" data-grade="G">G</button>
-          </div>
-        </div>
-
-        <button id="btn-calc-manual" class="primary wide">
-          Рассчитать
-        </button>
-      </main>
     </div>
 
     <!-- Экран 3: результат -->
@@ -329,7 +312,7 @@
       </main>
     </div>
 
-    <!-- ЭКРАН: РЕЗЕРВ / PRO (ИСПРАВЛЕННЫЙ БЛОК) -->
+    <!-- ЭКРАН: РЕЗЕРВ / PRO (старый, пока оставим) -->
     <div class="screen" id="screen-reserve">
       <header class="header">
         <button class="back-btn" id="btn-back-from-reserve">←</button>
@@ -392,24 +375,24 @@
       </main>
     </div>
 
-     <!-- Экран: Таблицы редкости (бренды) -->
-<div class="modal-overlay" id="rarity-modal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h2 data-i18n="menu_rarity">Таблицы</h2>
-      <button class="modal-close" id="rarity-modal-close">×</button>
-    </div>
+    <!-- Модальное окно: Таблицы редкости (бренды) -->
+    <div class="modal-overlay" id="rarity-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 data-i18n="menu_rarity">Таблицы</h2>
+          <button class="modal-close" id="rarity-modal-close">×</button>
+        </div>
 
-    <div class="modal-content rarity-modal-content">
-      <!-- Переключатель брендов -->
-      <div class="brand-switcher">
-        <button class="brand-chip active" data-brand="agfa"><span>Agfa</span></button>
-        <button class="brand-chip" data-brand="basf"><span>BASF</span></button>
-        <button class="brand-chip" data-brand="denon"><span>Denon</span></button>
-        <button class="brand-chip" data-brand="maxell"><span>Maxell</span></button>
-        <button class="brand-chip" data-brand="sony"><span>Sony</span></button>
-        <button class="brand-chip" data-brand="tdk"><span>TDK</span></button>
-      </div>
+        <div class="modal-content rarity-modal-content">
+          <!-- Переключатель брендов -->
+          <div class="brand-switcher">
+            <button class="brand-chip active" data-brand="agfa"><span>Agfa</span></button>
+            <button class="brand-chip" data-brand="basf"><span>BASF</span></button>
+            <button class="brand-chip" data-brand="denon"><span>Denon</span></button>
+            <button class="brand-chip" data-brand="maxell"><span>Maxell</span></button>
+            <button class="brand-chip" data-brand="sony"><span>Sony</span></button>
+            <button class="brand-chip" data-brand="tdk"><span>TDK</span></button>
+          </div>
      
       <!-- Таблица: AGFA -->
 <div class="field brand-table" data-brand="agfa">

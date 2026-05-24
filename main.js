@@ -1,11 +1,8 @@
 // ==== НАСТРОЙКА API ====
-// Берём тот же origin, откуда открыта страница (http://45.145.5.37)
 const API_BASE = window.location.origin;
-
-// Эндпоинт оценки кассет
 const API_URL_FOR_CASSETTE = `${API_BASE}/api/analyze`;
 
-// Простая система экранов
+// Простая система экранов (оставляем только старт и результат)
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach((el) => {
     el.style.display = el.id === id ? 'block' : 'none';
@@ -83,6 +80,7 @@ const resources = {
     },
   },
 };
+
 
 // --- ДАННЫЕ ПО TDK (черновой JSON) ---
 const TDK_SERIES = [
@@ -243,7 +241,6 @@ function showBrand(brand) {
   });
 }
 
-// Функции для заполнения wow-блоков
 function fillWowBlockForSAX() {
   const data = TDK_SERIES.find(
     (item) => item.brand === 'TDK' && item.series === 'SA-X'
@@ -351,41 +348,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-   // --- МОДАЛКА ОЦЕНКИ ---
-  const assessmentModal = document.getElementById('assessment-modal');
-  const assessmentModalClose = document.getElementById('assessment-modal-close');
-  const modalAssessmentPhoto = document.getElementById('modal-assessment-photo');
-  const modalAssessmentManual = document.getElementById('modal-assessment-manual');
-
-  function openAssessmentModal() {
-    if (assessmentModal) assessmentModal.classList.add('show');
-  }
-
-  function closeAssessmentModal() {
-    if (assessmentModal) assessmentModal.classList.remove('show');
-  }
-
-  if (assessmentModal && assessmentModalClose) {
-    assessmentModalClose.addEventListener('click', closeAssessmentModal);
-    assessmentModal.addEventListener('click', (e) => {
-      if (e.target === assessmentModal) closeAssessmentModal();
-    });
-  }
-
-  if (modalAssessmentPhoto) {
-    modalAssessmentPhoto.addEventListener('click', () => {
-      closeAssessmentModal();
-      showScreen('screen-input-photo');
-    });
-  }
-
-  if (modalAssessmentManual) {
-    modalAssessmentManual.addEventListener('click', () => {
-      closeAssessmentModal();
-      showScreen('screen-input-manual');
-    });
-  }
-
   // --- МОДАЛКА МУЗЫКИ ---
   const musicModal = document.getElementById('music-modal');
   const musicModalClose = document.getElementById('music-modal-close');
@@ -457,6 +419,97 @@ window.addEventListener('DOMContentLoaded', () => {
     reserveModalClose.addEventListener('click', closeReserveModal);
     reserveModal.addEventListener('click', (e) => {
       if (e.target === reserveModal) closeReserveModal();
+    });
+  }
+
+  // --- МОДАЛКИ ОЦЕНКИ ---
+  const assessmentModal = document.getElementById('assessment-modal');
+  const assessmentModalClose = document.getElementById('assessment-modal-close');
+  const modalAssessmentPhoto = document.getElementById('modal-assessment-photo');
+  const modalAssessmentManual = document.getElementById('modal-assessment-manual');
+
+  const assessmentPhotoModal = document.getElementById('assessment-photo-modal');
+  const assessmentPhotoModalClose = document.getElementById('assessment-photo-modal-close');
+
+  const assessmentManualModal = document.getElementById('assessment-manual-modal');
+  const assessmentManualModalClose = document.getElementById('assessment-manual-modal-close');
+
+  function openAssessmentModal() {
+    if (assessmentModal) assessmentModal.classList.add('show');
+  }
+
+  function closeAssessmentModal() {
+    if (assessmentModal) assessmentModal.classList.remove('show');
+  }
+
+  function openAssessmentPhotoModal() {
+    if (assessmentPhotoModal) assessmentPhotoModal.classList.add('show');
+  }
+
+  function closeAssessmentPhotoModal() {
+    if (assessmentPhotoModal) assessmentPhotoModal.classList.remove('show');
+  }
+
+  function openAssessmentManualModal() {
+    if (assessmentManualModal) assessmentManualModal.classList.add('show');
+  }
+
+  function closeAssessmentManualModal() {
+    if (assessmentManualModal) assessmentManualModal.classList.remove('show');
+  }
+
+  if (assessmentModal && assessmentModalClose) {
+    assessmentModalClose.addEventListener('click', closeAssessmentModal);
+    assessmentModal.addEventListener('click', (e) => {
+      if (e.target === assessmentModal) closeAssessmentModal();
+    });
+  }
+
+  if (assessmentPhotoModal && assessmentPhotoModalClose) {
+    assessmentPhotoModalClose.addEventListener('click', closeAssessmentPhotoModal);
+    assessmentPhotoModal.addEventListener('click', (e) => {
+      if (e.target === assessmentPhotoModal) closeAssessmentPhotoModal();
+    });
+  }
+
+  if (assessmentManualModal && assessmentManualModalClose) {
+    assessmentManualModalClose.addEventListener('click', closeAssessmentManualModal);
+    assessmentManualModal.addEventListener('click', (e) => {
+      if (e.target === assessmentManualModal) closeAssessmentManualModal();
+    });
+  }
+
+  if (modalAssessmentPhoto) {
+    modalAssessmentPhoto.addEventListener('click', () => {
+      closeAssessmentModal();
+      openAssessmentPhotoModal();
+    });
+  }
+
+  if (modalAssessmentManual) {
+    modalAssessmentManual.addEventListener('click', () => {
+      closeAssessmentModal();
+      openAssessmentManualModal();
+    });
+  }
+
+  // --- ЭКРАН РЕЗУЛЬТАТА ---
+  const resultScreen = document.getElementById('screen-result');
+  const resultText = document.getElementById('result-text');
+  const btnBackFromResult = document.getElementById('btn-back-from-result');
+  const btnNew = document.getElementById('btn-new');
+
+  if (btnBackFromResult) {
+    btnBackFromResult.addEventListener('click', () => {
+      showScreen('screen-start');
+      setActiveMenu('assessment');
+    });
+  }
+
+  if (btnNew) {
+    btnNew.addEventListener('click', () => {
+      showScreen('screen-start');
+      setActiveMenu('assessment');
     });
   }
 
@@ -599,15 +652,15 @@ window.addEventListener('DOMContentLoaded', () => {
           urlTargetEl.onclick = () => window.open(data.payUrl, '_blank');
         }
 
-        const tg = window.Telegram?.WebApp;
-        if (tg?.openInvoice) {
-          tg.openInvoice(data.payUrl, (status) => {
+        const tg2 = window.Telegram?.WebApp;
+        if (tg2?.openInvoice) {
+          tg2.openInvoice(data.payUrl, (status) => {
             console.log('openInvoice status =', status);
           });
           return;
         }
-        if (tg?.openLink) {
-          tg.openLink(data.payUrl);
+        if (tg2?.openLink) {
+          tg2.openLink(data.payUrl);
           return;
         }
         window.open(data.payUrl, '_blank');
@@ -625,7 +678,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const section = item.dataset.section;
       console.log('MENU click =', section);
 
-     if (section === 'assessment') {
+      if (section === 'assessment') {
         openAssessmentModal();
         setActiveMenu('assessment');
       } else if (section === 'music') {
@@ -644,25 +697,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- ВЫБОР СПОСОБА ОЦЕНКИ ---
-  const photoBtn = document.querySelector('#screen-assessment [data-action="photo"]');
-  const manualBtn = document.querySelector('#screen-assessment [data-action="manual"]');
-  const backAssessment = document.getElementById('btn-back-from-assessment');
-
-  if (photoBtn) {
-    photoBtn.addEventListener('click', () => showScreen('screen-input-photo'));
-  }
-  if (manualBtn) {
-    manualBtn.addEventListener('click', () => showScreen('screen-input-manual'));
-  }
-  if (backAssessment) {
-    backAssessment.addEventListener('click', () => {
-      showScreen('screen-start');
-      setActiveMenu('assessment');
-    });
-  }
-
-  // обработчики клика по чипам
+  // --- обработчики клика по чипам брендов ---
   brandChips.forEach((chip) => {
     chip.addEventListener('click', () => {
       const brand = chip.dataset.brand;
@@ -673,4 +708,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // при первом входе в таблицы показываем Sony
   showBrand('sony');
-}); // конец DOMContentLoaded
+});
