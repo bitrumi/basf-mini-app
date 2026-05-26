@@ -347,6 +347,53 @@ window.addEventListener('DOMContentLoaded', () => {
       item.classList.toggle('active', item.dataset.section === section);
     });
   }
+  
+  async function searchMusic(query) {
+  if (!musicResults) return;
+
+  musicResults.innerHTML = '<p>Ищу треки...</p>';
+
+  try {
+    const res = await fetch(`${API_BASE}/api/music-search`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!res.ok) {
+      musicResults.innerHTML =
+        '<p>Не удалось получить результаты. Попробуй позже.</p>';
+      return;
+    }
+
+    const data = await res.json();
+    const items = Array.isArray(data.items) ? data.items : [];
+
+    if (!items.length) {
+      musicResults.innerHTML =
+        '<p>Ничего не найдено. Попробуй сформулировать запрос по‑другому.</p>';
+      return;
+    }
+
+    const html = items
+      .map((t) => {
+        const artist = t.artist || 'Неизвестный артист';
+        const title = t.title || 'Без названия';
+        const album = t.album || 'Без альбома';
+        return `<div class="music-result-item">
+          <div class="music-result-title">${artist} — ${title}</div>
+          <div class="music-result-subtitle">${album}</div>
+        </div>`;
+      })
+      .join('');
+
+    musicResults.innerHTML = html;
+  } catch (e) {
+    console.error('Music search frontend error', e);
+    musicResults.innerHTML =
+      '<p>Произошла ошибка при запросе к серверу. Попробуй позже.</p>';
+  }
+}
 
   // --- МОДАЛКА МУЗЫКИ ---
   const musicModal = document.getElementById('music-modal');
@@ -371,13 +418,13 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   if (musicSearchBtn && musicSearchInput && musicResults) {
-    musicSearchBtn.addEventListener('click', () => {
-      const query = musicSearchInput.value.trim();
-      if (!query) {
-        musicResults.innerHTML = '<p>Введи текст запроса.</p>';
-        return;
-      }
-      musicResults.innerHTML = `<p>Ищу трек по запросу: <b>${query}</b> (поиск будет подключен позже).</p>`;
+  musicSearchBtn.addEventListener('click', () => {
+    const query = musicSearchInput.value.trim();
+    if (!query) {
+      musicResults.innerHTML = '<p>Введи текст запроса.</p>';
+      return;
+    }
+     searchMusic(query);
     });
   }
 
