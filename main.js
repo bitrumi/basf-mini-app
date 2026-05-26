@@ -1,6 +1,6 @@
 // ==== НАСТРОЙКА API ====
-const API_BASE = window.location.origin;
-const API_URL_FOR_CASSETTE = `${API_BASE}/api/analyze`;
+// Мини‑аппа (GitHub / Telegram) → API на VPS
+const API_URL_FOR_CASSETTE = 'http://45.145.5.37/api/analyze';
 
 // Простая система экранов (оставляем только старт и результат)
 function showScreen(id) {
@@ -492,26 +492,191 @@ window.addEventListener('DOMContentLoaded', () => {
       openAssessmentManualModal();
     });
   }
+  
+  // --- GRADE + активация кнопок "Рассчитать" ---
+const gradeButtonsPhoto = document.querySelectorAll('#grade-buttons button');
+const gradeButtonsManual = document.querySelectorAll('#grade-buttons-manual button');
+const btnCalcPhoto = document.getElementById('btn-calc-photo');
+const btnCalcManual = document.getElementById('btn-calc-manual');
 
-  // --- ЭКРАН РЕЗУЛЬТАТА ---
-  const resultScreen = document.getElementById('screen-result');
+function handleGradeClick(buttons, targetStateKey, calcButton) {
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const grade = btn.dataset.grade;
+      if (!grade) return;
+
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      state[targetStateKey] = grade;
+
+      if (calcButton) {
+        calcButton.disabled = false;
+      }
+    });
+  });
+}
+
+if (gradeButtonsPhoto.length && btnCalcPhoto) {
+  btnCalcPhoto.disabled = true;
+  handleGradeClick(gradeButtonsPhoto, 'gradePhoto', btnCalcPhoto);
+}
+
+if (gradeButtonsManual.length && btnCalcManual) {
+  btnCalcManual.disabled = true;
+  handleGradeClick(gradeButtonsManual, 'gradeManual', btnCalcManual);
+}
+
+  // --- МОДАЛКА РЕЗУЛЬТАТА ---
+  const resultModal = document.getElementById('result-modal');
+  const resultModalClose = document.getElementById('result-modal-close');
   const resultText = document.getElementById('result-text');
-  const btnBackFromResult = document.getElementById('btn-back-from-result');
   const btnNew = document.getElementById('btn-new');
 
-  if (btnBackFromResult) {
-    btnBackFromResult.addEventListener('click', () => {
-      showScreen('screen-start');
+  function openResultModal() {
+    if (resultModal) {
+      resultModal.classList.add('show');
+    }
+  }
+
+  function closeResultModal() {
+    if (resultModal) {
+      resultModal.classList.remove('show');
+    }
+  }
+
+  if (resultModal && resultModalClose) {
+    resultModalClose.addEventListener('click', () => {
+      closeResultModal();
       setActiveMenu('assessment');
+    });
+
+    resultModal.addEventListener('click', (e) => {
+      if (e.target === resultModal) {
+        closeResultModal();
+        setActiveMenu('assessment');
+      }
     });
   }
 
   if (btnNew) {
     btnNew.addEventListener('click', () => {
-      showScreen('screen-start');
+      closeResultModal();
       setActiveMenu('assessment');
+      // по умолчанию открываем выбор способа оценки
+      openAssessmentModal();
     });
   }
+  
+    // --- ОБРАБОТЧИКИ КНОПОК "Рассчитать" ---
+
+  if (btnCalcPhoto) {
+  btnCalcPhoto.addEventListener('click', async () => {
+    const artistTitleInput = document.getElementById('input-artist-title');
+    const mediaSelect = document.getElementById('select-media');
+    const grade = state.gradePhoto;
+
+    const artistTitle = artistTitleInput?.value.trim();
+    const media = mediaSelect?.value;
+
+    if (!artistTitle || !media || !grade) {
+      alert('Заполни все поля и выбери grade.');
+      return;
+    }
+
+    try {
+      const res = await fetch(API_URL_FOR_CASSETTE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          image_url: null,          // пока фото не отправляем
+          user_artist: artistTitle, // строка "Исполнитель — Альбом"
+          user_album: artistTitle,  // можно то же самое
+          user_grade: grade,        // M / NM / VG+ / VG / G
+          media_type: media,        // cassette / cd / vinyl
+        }),
+      });
+
+      if (!res.ok) {
+        alert('Не удалось получить оценку. Попробуй позже.');
+        return;
+      }
+
+      const data = await res.json();
+
+      const textParts = [
+        `Результат для: ${artistTitle}`,
+        `Носитель: ${media}`,
+        `Grade: ${grade}`,
+        '',
+        data.text || 'Сервер вернул пустой ответ.',
+      ];
+
+      if (resultText) {
+        resultText.textContent = textParts.join('\n');
+      }
+
+      openResultModal();
+    } catch (e) {
+      console.error(e);
+      alert('Произошла ошибка при запросе к серверу.');
+      }
+    });
+  }
+
+  if (btnCalcManual) {
+  btnCalcManual.addEventListener('click', async () => {
+    const artistTitleInput = document.getElementById('input-artist-title-manual');
+    const mediaSelect = document.getElementById('select-media-manual');
+    const grade = state.gradeManual;
+
+    const artistTitle = artistTitleInput?.value.trim();
+    const media = mediaSelect?.value;
+
+    if (!artistTitle || !media || !grade) {
+      alert('Заполни все поля и выбери grade.');
+      return;
+    }
+
+    try {
+      const res = await fetch(API_URL_FOR_CASSETTE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          image_url: null,
+          user_artist: artistTitle,
+          user_album: artistTitle,
+          user_grade: grade,
+          media_type: media,
+        }),
+      });
+
+      if (!res.ok) {
+        alert('Не удалось получить оценку. Попробуй позже.');
+        return;
+      }
+
+      const data = await res.json();
+
+      const textParts = [
+        `Результат для: ${artistTitle}`,
+        `Носитель: ${media}`,
+        `Grade: ${grade}`,
+        '',
+        data.text || 'Сервер вернул пустой ответ.',
+      ];
+
+      if (resultText) {
+        resultText.textContent = textParts.join('\n');
+      }
+
+      openResultModal();
+    } catch (e) {
+      console.error(e);
+      alert('Произошла ошибка при запросе к серверу.');
+    }
+  });
+ }
 
   // --- ЭКРАН РЕЗЕРВА / ОПЛАТЫ (DOM-элементы) ---
   const backReserve = document.getElementById('btn-back-from-reserve');

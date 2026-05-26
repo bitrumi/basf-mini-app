@@ -152,7 +152,7 @@
             </div>
           </div>
 
-          <button id="btn-calc-photo" class="primary wide">
+          <button id="btn-calc-photo" class="primary wide" disabled>
             Рассчитать
           </button>
         </div>
@@ -197,7 +197,7 @@
             </div>
           </div>
 
-          <button id="btn-calc-manual" class="primary wide">
+          <button id="btn-calc-manual" class="primary wide" disabled>
             Рассчитать
           </button>
         </div>
@@ -297,19 +297,21 @@
       </div>
     </div>
 
-    <!-- Экран 3: результат -->
-    <div class="screen screen-result" id="screen-result">
-      <header class="header">
-        <button class="back-btn" id="btn-back-from-result">←</button>
-        <h2>Результат оценки</h2>
-      </header>
+      <!-- Модальное окно: Результат оценки -->
+    <div class="modal-overlay" id="result-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Результат оценки</h2>
+          <button class="modal-close" id="result-modal-close">×</button>
+        </div>
 
-      <main class="content">
-        <pre id="result-text" class="result-text"></pre>
-        <button id="btn-new" class="primary wide">
-          Оценить ещё
-        </button>
-      </main>
+        <div class="modal-content">
+          <pre id="result-text" class="result-text"></pre>
+          <button id="btn-new" class="primary wide">
+            Оценить ещё
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- ЭКРАН: РЕЗЕРВ / PRO (старый, пока оставим) -->

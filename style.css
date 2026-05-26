@@ -429,7 +429,7 @@ select:focus {
 button {
   font-size: 15px;
   padding: 11px 16px;
-  border-radius: 999px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   transition: background 0.18s ease-out, transform 0.12s ease-out,
@@ -438,7 +438,7 @@ button {
 }
 
 button.primary {
-  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  background: linear-gradient(135deg, #ff6b3d, #f4a55b);
   color: #fff;
   box-shadow: 0 10px 25px rgba(255, 65, 108, 0.35);
 }
@@ -449,9 +449,10 @@ button.primary:hover {
 }
 
 button.secondary {
-  background: rgba(20, 20, 20, 0.9);
+  background: linear-gradient(135deg,#ff6b3d, #f4a55b);
   color: #f5f5f5;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 65, 108, 0.25);
 }
 
 button.secondary:hover {
@@ -462,6 +463,18 @@ button.secondary:hover {
 button.wide {
   width: 100%;
   margin-top: 4px;
+}
+
+button:disabled,
+button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.grade-buttons button.active {
+  background: linear-gradient(135deg, #ff6b3d, #f4a55b);
+  color: #f9f3f3;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* Кнопки grade */
