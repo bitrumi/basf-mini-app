@@ -1,6 +1,7 @@
 // ==== НАСТРОЙКА API ====
 // Мини‑аппа (GitHub / Telegram) → API на VPS
-const API_URL_FOR_CASSETTE = 'http://45.145.5.37/api/analyze';
+const API_BASE = 'http://45.145.5.37:3001';
+const API_URL_FOR_CASSETTE = `${API_BASE}/api/analyze`;
 
 // Простая система экранов (оставляем только старт и результат)
 function showScreen(id) {
