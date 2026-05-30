@@ -1,7 +1,9 @@
 // ==== НАСТРОЙКА API ====
 // Мини‑аппа (GitHub / Telegram) → API на VPS
-const API_BASE = 'http://45.145.5.37:3001';
+const API_BASE = 'https://api.nftsound.ru';
+
 const API_URL_FOR_CASSETTE = `${API_BASE}/api/analyze`;
+const API_URL_FOR_MUSIC_SEARCH = `${API_BASE}/api/music-search`;
 
 // Простая система экранов (оставляем только старт и результат)
 function showScreen(id) {
