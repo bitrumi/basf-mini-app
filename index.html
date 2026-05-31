@@ -53,37 +53,76 @@
     </div>
 
     <!-- Модальное окно: Музыка -->
-    <div class="modal-overlay" id="music-modal">
-      <div class="modal-card">
-        <div class="modal-header">
-          <h2 data-i18n="music_modal_title">Музыка</h2>
-          <button class="modal-close" id="music-modal-close">×</button>
+<div class="modal-overlay" id="music-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 data-i18n="music_modal_title">Музыка</h2>
+      <button class="modal-close" id="music-modal-close">×</button>
+    </div>
+
+    <div class="modal-content">
+      <!-- Подсказка -->
+      <p class="hint" data-i18n="music_modal_hint">
+        Введи название трека, исполнителя или кусок текста песни.
+      </p>
+
+      <!-- Поиск -->
+      <div class="music-search">
+        <input
+          id="music-query"
+          type="text"
+          placeholder="Каста — Громче воды"
+        />
+        <button id="music-search-btn" data-i18n="music_modal_search_btn">
+          Найти
+        </button>
+      </div>
+
+      <!-- Результаты поиска -->
+      <div id="music-results" class="music-results">
+        <p class="placeholder" data-i18n="music_modal_placeholder">
+          Скоро здесь появится поиск по Deezer/Spotify. Пока это заглушка.
+        </p>
+      </div>
+
+      <!-- Мини-плеер выбранного трека -->
+      <div id="music-player" class="music-player">
+        <!-- сюда JS будет подставлять информацию о треке и кнопку ▶/⏸ -->
+      </div>
+
+      <!-- Текст и перевод -->
+      <div id="music-lyrics-block" class="music-lyrics-block">
+        <div class="music-lyrics-tabs">
+          <button
+            id="tab-lyrics-original"
+            class="music-lyrics-tab active"
+            data-tab="original"
+          >
+            Текст
+          </button>
+          <button
+            id="tab-lyrics-translated"
+            class="music-lyrics-tab"
+            data-tab="translated"
+          >
+            Перевод
+          </button>
         </div>
 
-        <div class="modal-content">
-          <p class="hint" data-i18n="music_modal_hint">
-            Введи название трека, исполнителя или кусок текста песни.
-          </p>
-
-          <div class="music-search">
-            <input
-              id="music-query"
-              type="text"
-              placeholder="Каста — Громче воды"
-            />
-            <button id="music-search-btn" data-i18n="music_modal_search_btn">
-              Найти
-            </button>
-          </div>
-
-          <div id="music-results" class="music-results">
-            <p class="placeholder" data-i18n="music_modal_placeholder">
-              Скоро здесь появится поиск по Deezer/Spotify. Пока это заглушка.
-            </p>
-          </div>
+        <div class="music-lyrics-content">
+          <pre
+            id="music-lyrics-original"
+            class="music-lyrics-pane active"
+          ></pre>
+          <pre
+            id="music-lyrics-translated"
+            class="music-lyrics-pane"
+          ></pre>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- Модальное окно: Оценка (выбор способа) -->
     <div class="modal-overlay" id="assessment-modal">

@@ -18,6 +18,9 @@ let state = {
   gradeManual: null,
 };
 
+let currentAudio = null;
+let currentTrack = null;
+
 // ===== НОВОЕ: универсальная функция получения userId из Telegram =====
 function getTelegramUserId() {
   const tg = window.Telegram?.WebApp;
@@ -280,6 +283,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (tg) {
     tg.expand();
   }
+  
   fillWowBlockForMAXG();
   fillWowBlockForSAX();
 
@@ -352,51 +356,180 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   
   async function searchMusic(query) {
-  if (!musicResults) return;
+    if (!musicResults) return;
 
-  musicResults.innerHTML = '<p>Ищу треки...</p>';
+    musicResults.innerHTML = '<p>Ищу треки...</p>';
 
-  try {
-    const res = await fetch(`${API_BASE}/api/music-search`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query }),
-    });
+    try {
+      const res = await fetch(API_URL_FOR_MUSIC_SEARCH, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
 
-    if (!res.ok) {
-      musicResults.innerHTML =
-        '<p>Не удалось получить результаты. Попробуй позже.</p>';
-      return;
-    }
+      if (!res.ok) {
+        musicResults.innerHTML =
+          '<p>Не удалось получить результаты. Попробуй позже.</p>';
+        return;
+      }
 
-    const data = await res.json();
-    const items = Array.isArray(data.items) ? data.items : [];
+      const data = await res.json();
+      const items = Array.isArray(data.items) ? data.items : [];
 
-    if (!items.length) {
-      musicResults.innerHTML =
-        '<p>Ничего не найдено. Попробуй сформулировать запрос по‑другому.</p>';
-      return;
-    }
+      if (!items.length) {
+        musicResults.innerHTML =
+          '<p>Ничего не найдено. Попробуй сформулировать запрос по‑другому.</p>';
+        return;
+      }
 
-    const html = items
-      .map((t) => {
+      musicResults.innerHTML = '';
+
+      items.forEach((t) => {
         const artist = t.artist || 'Неизвестный артист';
         const title = t.title || 'Без названия';
         const album = t.album || 'Без альбома';
-        return `<div class="music-result-item">
-          <div class="music-result-title">${artist} — ${title}</div>
-          <div class="music-result-subtitle">${album}</div>
-        </div>`;
-      })
-      .join('');
+        const duration = typeof t.duration === 'number' ? t.duration : null;
 
-    musicResults.innerHTML = html;
-  } catch (e) {
-    console.error('Music search frontend error', e);
-    musicResults.innerHTML =
-      '<p>Произошла ошибка при запросе к серверу. Попробуй позже.</p>';
+        const row = document.createElement('div');
+        row.className = 'music-result-item';
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'music-result-title';
+        titleEl.textContent = `${artist} — ${title}`;
+
+        const subtitleEl = document.createElement('div');
+        subtitleEl.className = 'music-result-subtitle';
+
+        if (duration != null) {
+          const minutes = Math.floor(duration / 60);
+          const seconds = String(duration % 60).padStart(2, '0');
+          subtitleEl.textContent = `${album} • ${minutes}:${seconds}`;
+        } else {
+          subtitleEl.textContent = album;
+        }
+
+        row.appendChild(titleEl);
+        row.appendChild(subtitleEl);
+
+        // клик по треку
+        row.addEventListener('click', () => {
+          const track = {
+            ...t,
+            artist,
+            title,
+            album,
+          };
+          handleTrackSelect(track);
+        });
+
+        musicResults.appendChild(row);
+      });
+    } catch (e) {
+      console.error('Music search frontend error', e);
+      musicResults.innerHTML =
+        '<p>Произошла ошибка при запросе к серверу. Попробуй позже.</p>';
   }
 }
+
+      function handleTrackSelect(track) {
+    currentTrack = track;
+
+    // 1) Подставить в поля оценки
+    const mainInput = document.getElementById('input-artist-title');
+    const manualInput = document.getElementById('input-artist-title-manual');
+    const value = `${track.artist} — ${track.title}`;
+    if (mainInput) mainInput.value = value;
+    if (manualInput) manualInput.value = value;
+
+    // 2) Обновить мини-плеер
+    const playerEl = document.getElementById('music-player');
+    if (playerEl) {
+      renderMusicPlayer(playerEl, track);
+    }
+
+    // 3) Показать текст и перевод (пока заглушки, backend добавим позже)
+    const originalEl = document.getElementById('music-lyrics-original');
+    const translatedEl = document.getElementById('music-lyrics-translated');
+
+    if (originalEl) {
+      originalEl.textContent =
+        track.lyrics_original || 'Текст песни пока недоступен.';
+    }
+    if (translatedEl) {
+      translatedEl.textContent =
+        track.lyrics_translated || 'Перевод пока недоступен.';
+    }
+
+    // по умолчанию показываем вкладку "Текст"
+    switchLyricsTab('original');
+  }
+
+  function renderMusicPlayer(container, track) {
+    container.innerHTML = '';
+
+    const infoEl = document.createElement('div');
+    infoEl.className = 'music-player-info';
+    infoEl.textContent = `${track.artist} — ${track.title}`;
+
+    const controlsEl = document.createElement('div');
+    controlsEl.className = 'music-player-controls';
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'music-player-play';
+    playBtn.textContent = '▶';
+
+    // Останавливаем предыдущий трек
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
+    }
+
+    if (track.preview_url) {
+      currentAudio = new Audio(track.preview_url);
+
+      playBtn.addEventListener('click', () => {
+        if (!currentAudio) return;
+        if (currentAudio.paused) {
+          currentAudio.play();
+          playBtn.textContent = '⏸';
+        } else {
+          currentAudio.pause();
+          playBtn.textContent = '▶';
+        }
+      });
+    } else {
+      playBtn.disabled = true;
+      playBtn.textContent = 'Нет превью';
+    }
+
+    controlsEl.appendChild(playBtn);
+    container.appendChild(infoEl);
+    container.appendChild(controlsEl);
+  }
+
+  // вкладки "Текст / Перевод"
+  const lyricsTabs = document.querySelectorAll('.music-lyrics-tab');
+  const lyricsPaneOriginal = document.getElementById('music-lyrics-original');
+  const lyricsPaneTranslated = document.getElementById('music-lyrics-translated');
+
+  function switchLyricsTab(tab) {
+    lyricsTabs.forEach((btn) => {
+      const isActive = btn.dataset.tab === tab;
+      btn.classList.toggle('active', isActive);
+    });
+
+    if (lyricsPaneOriginal && lyricsPaneTranslated) {
+      lyricsPaneOriginal.classList.toggle('active', tab === 'original');
+      lyricsPaneTranslated.classList.toggle('active', tab === 'translated');
+    }
+  }
+
+  lyricsTabs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      switchLyricsTab(tab);
+    });
+  });
 
   // --- МОДАЛКА МУЗЫКИ ---
   const musicModal = document.getElementById('music-modal');
