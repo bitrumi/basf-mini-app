@@ -383,8 +383,15 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       musicResults.innerHTML = '';
+      
+      // сбросить старый плеер
+      const playerEl = document.getElementById('music-player');
+     if (playerEl) {
+      playerEl.style.display = 'none';
+       playerEl.innerHTML = '';
+     }
 
-      items.forEach((t) => {
+        items.forEach((t) => {
         const artist = t.artist || 'Неизвестный артист';
         const title = t.title || 'Без названия';
         const album = t.album || 'Без альбома';
@@ -432,79 +439,81 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 
       function handleTrackSelect(track) {
-    currentTrack = track;
+  currentTrack = track;
 
-    // 1) Подставить в поля оценки
-    const mainInput = document.getElementById('input-artist-title');
-    const manualInput = document.getElementById('input-artist-title-manual');
-    const value = `${track.artist} — ${track.title}`;
-    if (mainInput) mainInput.value = value;
-    if (manualInput) manualInput.value = value;
+  // 1) Подставить в поля оценки
+  const mainInput = document.getElementById('input-artist-title');
+  const manualInput = document.getElementById('input-artist-title-manual');
+  const value = `${track.artist} — ${track.title}`;
+  if (mainInput) mainInput.value = value;
+  if (manualInput) manualInput.value = value;
 
-    // 2) Обновить мини-плеер
-    const playerEl = document.getElementById('music-player');
-    if (playerEl) {
-      renderMusicPlayer(playerEl, track);
-    }
-
-    // 3) Показать текст и перевод (пока заглушки, backend добавим позже)
-    const originalEl = document.getElementById('music-lyrics-original');
-    const translatedEl = document.getElementById('music-lyrics-translated');
-
-    if (originalEl) {
-      originalEl.textContent =
-        track.lyrics_original || 'Текст песни пока недоступен.';
-    }
-    if (translatedEl) {
-      translatedEl.textContent =
-        track.lyrics_translated || 'Перевод пока недоступен.';
-    }
-
-    // по умолчанию показываем вкладку "Текст"
-    switchLyricsTab('original');
+  // 2) Обновить мини-плеер
+  const playerEl = document.getElementById('music-player');
+  if (playerEl) {
+    renderMusicPlayer(playerEl, track);
   }
 
+  // 3) Показать текст и перевод
+  const originalEl = document.getElementById('music-lyrics-original');
+  const translatedEl = document.getElementById('music-lyrics-translated');
+
+  if (originalEl) {
+    originalEl.textContent =
+      track.lyrics_original || 'Текст песни пока недоступен.';
+  }
+  if (translatedEl) {
+    translatedEl.textContent =
+      track.lyrics_translated || 'Перевод пока недоступен.';
+  }
+
+  switchLyricsTab('original');
+}
+
+
   function renderMusicPlayer(container, track) {
-    container.innerHTML = '';
+  // показать и очистить
+  container.style.display = 'flex';
+  container.innerHTML = '';
 
-    const infoEl = document.createElement('div');
-    infoEl.className = 'music-player-info';
-    infoEl.textContent = `${track.artist} — ${track.title}`;
+  const infoEl = document.createElement('div');
+  infoEl.className = 'music-player-info';
+  infoEl.textContent = `${track.artist} — ${track.title}`;
 
-    const controlsEl = document.createElement('div');
-    controlsEl.className = 'music-player-controls';
+  const controlsEl = document.createElement('div');
+  controlsEl.className = 'music-player-controls';
 
-    const playBtn = document.createElement('button');
-    playBtn.className = 'music-player-play';
-    playBtn.textContent = '▶';
+  const playBtn = document.createElement('button');
+  playBtn.className = 'music-player-play';
+  playBtn.textContent = '▶';
 
-    // Останавливаем предыдущий трек
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio = null;
-    }
+  // Останавливаем предыдущий трек
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
 
-    if (track.preview_url) {
-      currentAudio = new Audio(track.preview_url);
+  if (track.preview_url) {
+    currentAudio = new Audio(track.preview_url);
 
-      playBtn.addEventListener('click', () => {
-        if (!currentAudio) return;
-        if (currentAudio.paused) {
-          currentAudio.play();
-          playBtn.textContent = '⏸';
-        } else {
-          currentAudio.pause();
-          playBtn.textContent = '▶';
-        }
-      });
-    } else {
-      playBtn.disabled = true;
-      playBtn.textContent = 'Нет превью';
-    }
+    playBtn.addEventListener('click', () => {
+      if (!currentAudio) return;
+      if (currentAudio.paused) {
+        currentAudio.play();
+        playBtn.textContent = '⏸';
+      } else {
+        currentAudio.pause();
+        playBtn.textContent = '▶';
+      }
+    });
+  } else {
+    playBtn.disabled = true;
+    playBtn.textContent = 'Нет превью';
+  }
 
-    controlsEl.appendChild(playBtn);
-    container.appendChild(infoEl);
-    container.appendChild(controlsEl);
+  controlsEl.appendChild(playBtn);
+  container.appendChild(infoEl);
+  container.appendChild(controlsEl);
   }
 
   // вкладки "Текст / Перевод"

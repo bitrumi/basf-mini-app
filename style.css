@@ -940,3 +940,49 @@ button[disabled] {
   margin: 0;
   opacity: 0.75;
 }
+
+#music-player {
+  background: linear-gradient(135deg, #4ad37f, #58e37b);
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid #b4e3c5;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.music-player-info {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f3b2b;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-player-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.music-player-play {
+  background-color: #3aa96b;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  line-height: 32px;        /* текст по центру */
+  padding: 0;               /* чтобы не ломало высоту */
+  cursor: pointer;
+}
+
+.music-player-play:disabled {
+  background-color: #a9d7ba;
+  cursor: default;
+}
