@@ -87,7 +87,6 @@ const resources = {
   },
 };
 
-
 // --- ДАННЫЕ ПО TDK (черновой JSON) ---
 const TDK_SERIES = [
   {
@@ -99,7 +98,7 @@ const TDK_SERIES = [
     rarity: '1',
     price_nos_eur: '2–5',
     price_open_eur: '1–2',
-    note: 'Массовый феррик TDK, самый распространённый вариант; хорош для повседневной записи и ностальгии, коллекционная ценность минимальна.'
+    note: 'Массовый феррик TDK, самый распространённый вариант; хорош для повседневной записи и ностальгии, коллекционная ценность минимальна.',
   },
   {
     brand: 'TDK',
@@ -111,7 +110,7 @@ const TDK_SERIES = [
     rarity: '2–3',
     price_nos_eur: '3–7',
     price_open_eur: '1–3',
-    note: 'Усиленный феррик; по измерениям не сильно уступает ранним SA, считается одним из лучших Type I у TDK своего времени.'
+    note: 'Усиленный феррик; по измерениям не сильно уступает ранним SA, считается одним из лучших Type I у TDK своего времени.',
   },
   {
     brand: 'TDK',
@@ -123,7 +122,7 @@ const TDK_SERIES = [
     rarity: '3–4',
     price_nos_eur: '10–25+',
     price_open_eur: '4–8+',
-    note: 'Ранняя суперферритовая линейка до AD/AR; встречается заметно реже обычных D/AD, особенно ранние японские выпуски конца 70‑х и начала 80‑х.'
+    note: 'Ранняя суперферритовая линейка до AD/AR; встречается заметно реже обычных D/AD, особенно ранние японские выпуски конца 70‑х и начала 80‑х.',
   },
   {
     brand: 'TDK',
@@ -135,7 +134,7 @@ const TDK_SERIES = [
     rarity: '3–4',
     price_nos_eur: '8–18+',
     price_open_eur: '3–7+',
-    note: 'Топовый Type I TDK поверх AD; ближе к superferric, с хорошими басами и динамическим диапазоном, особенно поздние AR и AR‑X ценятся у записывающих на Type I.'
+    note: 'Топовый Type I TDK поверх AD; ближе к superferric, с хорошими басами и динамическим диапазоном, особенно поздние AR и AR‑X ценятся у записывающих на Type I.',
   },
   {
     brand: 'TDK',
@@ -147,7 +146,7 @@ const TDK_SERIES = [
     rarity: '2–3',
     price_nos_eur: '5–12',
     price_open_eur: '2–4',
-    note: 'Классический хром TDK, один из самых популярных Type II; большой разброс по ценам в зависимости от года, рынка (Japan/US/Europe) и дизайна.'
+    note: 'Классический хром TDK, один из самых популярных Type II; большой разброс по ценам в зависимости от года, рынка (Japan/US/Europe) и дизайна.',
   },
   {
     brand: 'TDK',
@@ -159,7 +158,7 @@ const TDK_SERIES = [
     rarity: '3–4',
     price_nos_eur: '12–25+',
     price_open_eur: '4–8+',
-    note: 'Топовый хром TDK с двухслойным покрытием; считается одним из лучших Type II на рынке, особенно ранние поколения и японские версии.'
+    note: 'Топовый хром TDK с двухслойным покрытием; считается одним из лучших Type II на рынке, особенно ранние поколения и японские версии.',
   },
   {
     brand: 'TDK',
@@ -171,7 +170,7 @@ const TDK_SERIES = [
     rarity: '4',
     price_nos_eur: '20–35+',
     price_open_eur: '7–12+',
-    note: 'Ещё более продвинутая версия SA‑X с ориентацией на аудиофилов; сравнительно редкая линейка с заметным спросом среди коллекционеров.'
+    note: 'Ещё более продвинутая версия SA‑X с ориентацией на аудиофилов; сравнительно редкая линейка с заметным спросом среди коллекционеров.',
   },
   {
     brand: 'TDK',
@@ -183,7 +182,7 @@ const TDK_SERIES = [
     rarity: '3–4',
     price_nos_eur: '15–30+',
     price_open_eur: '5–10+',
-    note: 'Основная металлическая линейка TDK; ценится и за звук, и за разнообразие корпусов разных поколений.'
+    note: 'Основная металлическая линейка TDK; ценится и за звук, и за разнообразие корпусов разных поколений.',
   },
   {
     brand: 'TDK',
@@ -195,7 +194,7 @@ const TDK_SERIES = [
     rarity: '4',
     price_nos_eur: '25–45+',
     price_open_eur: '8–15+',
-    note: 'Усиленная версия MA с улучшенными характеристиками и более дорогим позиционированием; востребована среди коллекционеров и любителей металла.'
+    note: 'Усиленная версия MA с улучшенными характеристиками и более дорогим позиционированием; востребована среди коллекционеров и любителей металла.',
   },
   {
     brand: 'TDK',
@@ -207,8 +206,8 @@ const TDK_SERIES = [
     rarity: '5',
     price_nos_eur: '50–100+',
     price_open_eur: '20–40+',
-    note: 'Флагманская металлическая серия с тяжёлым корпусом; одни из самых дорогих и желанных TDK на рынке, особенно в состоянии NOS.'
-  }
+    note: 'Флагманская металлическая серия с тяжёлым корпусом; одни из самых дорогих и желанных TDK на рынке, особенно в состоянии NOS.',
+  },
 ];
 
 // --- ПЕРЕКЛЮЧЕНИЕ БРЕНДОВ В ТАБЛИЦАХ (объявлено до модалок) ---
@@ -249,7 +248,7 @@ function showBrand(brand) {
 
 function fillWowBlockForSAX() {
   const data = TDK_SERIES.find(
-    (item) => item.brand === 'TDK' && item.series === 'SA-X'
+    (item) => item.brand === 'TDK' && item.series === 'SA-X',
   );
   if (!data) return;
 
@@ -258,13 +257,13 @@ function fillWowBlockForSAX() {
   const detailEl = document.getElementById('wow-sa-x-detail');
 
   if (titleEl) titleEl.textContent = data.name;
-  if (subtitleEl) subtitleEl.textContent = `${data.type}, ${data.years}, редкость ${data.rarity}`;
+  if (subtitleEl) titleEl.textContent = `${data.type}, ${data.years}, редкость ${data.rarity}`;
   if (detailEl) detailEl.textContent = `NOS: ${data.price_nos_eur} €, открытая: ${data.price_open_eur} €. ${data.note}`;
 }
 
 function fillWowBlockForMAXG() {
   const data = TDK_SERIES.find(
-    (item) => item.brand === 'TDK' && item.series === 'MA-XG'
+    (item) => item.brand === 'TDK' && item.series === 'MA-XG',
   );
   if (!data) return;
 
@@ -283,7 +282,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (tg) {
     tg.expand();
   }
-  
+
   fillWowBlockForMAXG();
   fillWowBlockForSAX();
 
@@ -296,7 +295,7 @@ window.addEventListener('DOMContentLoaded', () => {
     },
     () => {
       updateContent();
-    }
+    },
   );
 
   function updateContent() {
@@ -354,7 +353,29 @@ window.addEventListener('DOMContentLoaded', () => {
       item.classList.toggle('active', item.dataset.section === section);
     });
   }
-  
+
+  // --- МУЗЫКА ---
+  const musicModal = document.getElementById('music-modal');
+  const musicModalClose = document.getElementById('music-modal-close');
+  const musicSearchInput = document.getElementById('music-query');
+  const musicSearchBtn = document.getElementById('music-search-btn');
+  const musicResults = document.getElementById('music-results');
+
+  function openMusicModal() {
+    if (musicModal) musicModal.classList.add('show');
+  }
+
+  function closeMusicModal() {
+    if (musicModal) musicModal.classList.remove('show');
+  }
+
+  if (musicModal && musicModalClose) {
+    musicModalClose.addEventListener('click', closeMusicModal);
+    musicModal.addEventListener('click', (e) => {
+      if (e.target === musicModal) closeMusicModal();
+    });
+  }
+
   async function searchMusic(query) {
     if (!musicResults) return;
 
@@ -383,15 +404,15 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       musicResults.innerHTML = '';
-      
+
       // сбросить старый плеер
       const playerEl = document.getElementById('music-player');
-     if (playerEl) {
-      playerEl.style.display = 'none';
-       playerEl.innerHTML = '';
-     }
+      if (playerEl) {
+        playerEl.style.display = 'none';
+        playerEl.innerHTML = '';
+      }
 
-        items.forEach((t) => {
+      items.forEach((t) => {
         const artist = t.artist || 'Неизвестный артист';
         const title = t.title || 'Без названия';
         const album = t.album || 'Без альбома';
@@ -435,85 +456,18 @@ window.addEventListener('DOMContentLoaded', () => {
       console.error('Music search frontend error', e);
       musicResults.innerHTML =
         '<p>Произошла ошибка при запросе к серверу. Попробуй позже.</p>';
-  }
-}
-
-      function handleTrackSelect(track) {
-  currentTrack = track;
-
-  // 1) Подставить в поля оценки
-  const mainInput = document.getElementById('input-artist-title');
-  const manualInput = document.getElementById('input-artist-title-manual');
-  const value = `${track.artist} — ${track.title}`;
-  if (mainInput) mainInput.value = value;
-  if (manualInput) manualInput.value = value;
-
-  // 2) Обновить мини-плеер
-  const playerEl = document.getElementById('music-player');
-  if (playerEl) {
-    renderMusicPlayer(playerEl, track);
+    }
   }
 
-  // 3) Показать текст и перевод
-  const originalEl = document.getElementById('music-lyrics-original');
-  const translatedEl = document.getElementById('music-lyrics-translated');
-
-  if (originalEl) {
-    originalEl.textContent =
-      track.lyrics_original || 'Текст песни пока недоступен.';
-  }
-  if (translatedEl) {
-    translatedEl.textContent =
-      track.lyrics_translated || 'Перевод пока недоступен.';
-  }
-
-  switchLyricsTab('original');
-}
-
-
-  function renderMusicPlayer(container, track) {
-  // показать и очистить
-  container.style.display = 'flex';
-  container.innerHTML = '';
-
-  const infoEl = document.createElement('div');
-  infoEl.className = 'music-player-info';
-  infoEl.textContent = `${track.artist} — ${track.title}`;
-
-  const controlsEl = document.createElement('div');
-  controlsEl.className = 'music-player-controls';
-
-  const playBtn = document.createElement('button');
-  playBtn.className = 'music-player-play';
-  playBtn.textContent = '▶';
-
-  // Останавливаем предыдущий трек
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio = null;
-  }
-
-  if (track.preview_url) {
-    currentAudio = new Audio(track.preview_url);
-
-    playBtn.addEventListener('click', () => {
-      if (!currentAudio) return;
-      if (currentAudio.paused) {
-        currentAudio.play();
-        playBtn.textContent = '⏸';
-      } else {
-        currentAudio.pause();
-        playBtn.textContent = '▶';
+  if (musicSearchBtn && musicSearchInput && musicResults) {
+    musicSearchBtn.addEventListener('click', () => {
+      const query = musicSearchInput.value.trim();
+      if (!query) {
+        musicResults.innerHTML = '<p>Введи текст запроса.</p>';
+        return;
       }
+      searchMusic(query);
     });
-  } else {
-    playBtn.disabled = true;
-    playBtn.textContent = 'Нет превью';
-  }
-
-  controlsEl.appendChild(playBtn);
-  container.appendChild(infoEl);
-  container.appendChild(controlsEl);
   }
 
   // вкладки "Текст / Перевод"
@@ -540,38 +494,90 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- МОДАЛКА МУЗЫКИ ---
-  const musicModal = document.getElementById('music-modal');
-  const musicModalClose = document.getElementById('music-modal-close');
-  const musicSearchInput = document.getElementById('music-query');
-  const musicSearchBtn = document.getElementById('music-search-btn');
-  const musicResults = document.getElementById('music-results');
+  function renderMusicPlayer(container, track) {
+    // показать и очистить
+    container.style.display = 'flex';
+    container.innerHTML = '';
 
-  function openMusicModal() {
-    if (musicModal) musicModal.classList.add('show');
-  }
+    const infoEl = document.createElement('div');
+    infoEl.className = 'music-player-info';
 
-  function closeMusicModal() {
-    if (musicModal) musicModal.classList.remove('show');
-  }
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'music-player-title';
+    titleSpan.textContent = `${track.artist} — ${track.title}`;
 
-  if (musicModal && musicModalClose) {
-    musicModalClose.addEventListener('click', closeMusicModal);
-    musicModal.addEventListener('click', (e) => {
-      if (e.target === musicModal) closeMusicModal();
-    });
-  }
+    infoEl.appendChild(titleSpan);
 
-  if (musicSearchBtn && musicSearchInput && musicResults) {
-  musicSearchBtn.addEventListener('click', () => {
-    const query = musicSearchInput.value.trim();
-    if (!query) {
-      musicResults.innerHTML = '<p>Введи текст запроса.</p>';
-      return;
+    const controlsEl = document.createElement('div');
+    controlsEl.className = 'music-player-controls';
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'music-player-play';
+    playBtn.textContent = '▶';
+
+    // Останавливаем предыдущий трек
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
     }
-     searchMusic(query);
-    });
+
+    if (track.preview_url) {
+      currentAudio = new Audio(track.preview_url);
+
+      playBtn.addEventListener('click', () => {
+        if (!currentAudio) return;
+        if (currentAudio.paused) {
+          currentAudio.play();
+          playBtn.textContent = '⏸';
+        } else {
+          currentAudio.pause();
+          playBtn.textContent = '▶';
+        }
+      });
+    } else {
+      playBtn.disabled = true;
+      playBtn.textContent = 'Нет превью';
+    }
+
+    controlsEl.appendChild(playBtn);
+    container.appendChild(infoEl);
+    container.appendChild(controlsEl);
   }
+
+  function handleTrackSelect(track) {
+    currentTrack = track;
+
+    // 1) Подставить в поля оценки
+    const mainInput = document.getElementById('input-artist-title');
+    const manualInput = document.getElementById('input-artist-title-manual');
+    const value = `${track.artist} — ${track.title}`;
+    if (mainInput) mainInput.value = value;
+    if (manualInput) manualInput.value = value;
+
+    // 2) Обновить мини-плеер
+    const playerEl = document.getElementById('music-player');
+    if (playerEl) {
+      renderMusicPlayer(playerEl, track);
+    }
+
+    // 3) Показать только оригинальный текст
+    const originalEl = document.getElementById('music-lyrics-original');
+    const translatedEl = document.getElementById('music-lyrics-translated');
+
+    if (originalEl) {
+      const original = track.lyrics_original && track.lyrics_original.trim();
+      originalEl.textContent = original || 'Текст песни пока недоступен.';
+    }
+
+    // Перевод пока просто гасим / ставим заглушку
+    if (translatedEl) {
+      translatedEl.textContent = 'Перевод будет добавлен позже.';
+    }
+
+    switchLyricsTab('original');
+  }
+
+  // --- МОДАЛКА МУЗЫКИ завершена ---
 
   // --- МОДАЛКА ТАБЛИЦ РЕДКОСТИ ---
   const rarityModal = document.getElementById('rarity-modal');
@@ -684,40 +690,40 @@ window.addEventListener('DOMContentLoaded', () => {
       openAssessmentManualModal();
     });
   }
-  
+
   // --- GRADE + активация кнопок "Рассчитать" ---
-const gradeButtonsPhoto = document.querySelectorAll('#grade-buttons button');
-const gradeButtonsManual = document.querySelectorAll('#grade-buttons-manual button');
-const btnCalcPhoto = document.getElementById('btn-calc-photo');
-const btnCalcManual = document.getElementById('btn-calc-manual');
+  const gradeButtonsPhoto = document.querySelectorAll('#grade-buttons button');
+  const gradeButtonsManual = document.querySelectorAll('#grade-buttons-manual button');
+  const btnCalcPhoto = document.getElementById('btn-calc-photo');
+  const btnCalcManual = document.getElementById('btn-calc-manual');
 
-function handleGradeClick(buttons, targetStateKey, calcButton) {
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const grade = btn.dataset.grade;
-      if (!grade) return;
+  function handleGradeClick(buttons, targetStateKey, calcButton) {
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const grade = btn.dataset.grade;
+        if (!grade) return;
 
-      buttons.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
 
-      state[targetStateKey] = grade;
+        state[targetStateKey] = grade;
 
-      if (calcButton) {
-        calcButton.disabled = false;
-      }
+        if (calcButton) {
+          calcButton.disabled = false;
+        }
+      });
     });
-  });
-}
+  }
 
-if (gradeButtonsPhoto.length && btnCalcPhoto) {
-  btnCalcPhoto.disabled = true;
-  handleGradeClick(gradeButtonsPhoto, 'gradePhoto', btnCalcPhoto);
-}
+  if (gradeButtonsPhoto.length && btnCalcPhoto) {
+    btnCalcPhoto.disabled = true;
+    handleGradeClick(gradeButtonsPhoto, 'gradePhoto', btnCalcPhoto);
+  }
 
-if (gradeButtonsManual.length && btnCalcManual) {
-  btnCalcManual.disabled = true;
-  handleGradeClick(gradeButtonsManual, 'gradeManual', btnCalcManual);
-}
+  if (gradeButtonsManual.length && btnCalcManual) {
+    btnCalcManual.disabled = true;
+    handleGradeClick(gradeButtonsManual, 'gradeManual', btnCalcManual);
+  }
 
   // --- МОДАЛКА РЕЗУЛЬТАТА ---
   const resultModal = document.getElementById('result-modal');
@@ -759,116 +765,115 @@ if (gradeButtonsManual.length && btnCalcManual) {
       openAssessmentModal();
     });
   }
-  
-    // --- ОБРАБОТЧИКИ КНОПОК "Рассчитать" ---
 
+  // --- ОБРАБОТЧИКИ КНОПОК "Рассчитать" ---
   if (btnCalcPhoto) {
-  btnCalcPhoto.addEventListener('click', async () => {
-    const artistTitleInput = document.getElementById('input-artist-title');
-    const mediaSelect = document.getElementById('select-media');
-    const grade = state.gradePhoto;
+    btnCalcPhoto.addEventListener('click', async () => {
+      const artistTitleInput = document.getElementById('input-artist-title');
+      const mediaSelect = document.getElementById('select-media');
+      const grade = state.gradePhoto;
 
-    const artistTitle = artistTitleInput?.value.trim();
-    const media = mediaSelect?.value;
+      const artistTitle = artistTitleInput?.value.trim();
+      const media = mediaSelect?.value;
 
-    if (!artistTitle || !media || !grade) {
-      alert('Заполни все поля и выбери grade.');
-      return;
-    }
-
-    try {
-      const res = await fetch(API_URL_FOR_CASSETTE, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image_url: null,          // пока фото не отправляем
-          user_artist: artistTitle, // строка "Исполнитель — Альбом"
-          user_album: artistTitle,  // можно то же самое
-          user_grade: grade,        // M / NM / VG+ / VG / G
-          media_type: media,        // cassette / cd / vinyl
-        }),
-      });
-
-      if (!res.ok) {
-        alert('Не удалось получить оценку. Попробуй позже.');
+      if (!artistTitle || !media || !grade) {
+        alert('Заполни все поля и выбери grade.');
         return;
       }
 
-      const data = await res.json();
+      try {
+        const res = await fetch(API_URL_FOR_CASSETTE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image_url: null,
+            user_artist: artistTitle,
+            user_album: artistTitle,
+            user_grade: grade,
+            media_type: media,
+          }),
+        });
 
-      const textParts = [
-        `Результат для: ${artistTitle}`,
-        `Носитель: ${media}`,
-        `Grade: ${grade}`,
-        '',
-        data.text || 'Сервер вернул пустой ответ.',
-      ];
+        if (!res.ok) {
+          alert('Не удалось получить оценку. Попробуй позже.');
+          return;
+        }
 
-      if (resultText) {
-        resultText.textContent = textParts.join('\n');
-      }
+        const data = await res.json();
 
-      openResultModal();
-    } catch (e) {
-      console.error(e);
-      alert('Произошла ошибка при запросе к серверу.');
+        const textParts = [
+          `Результат для: ${artistTitle}`,
+          `Носитель: ${media}`,
+          `Grade: ${grade}`,
+          '',
+          data.text || 'Сервер вернул пустой ответ.',
+        ];
+
+        if (resultText) {
+          resultText.textContent = textParts.join('\n');
+        }
+
+        openResultModal();
+      } catch (e) {
+        console.error(e);
+        alert('Произошла ошибка при запросе к серверу.');
       }
     });
   }
 
   if (btnCalcManual) {
-  btnCalcManual.addEventListener('click', async () => {
-    const artistTitleInput = document.getElementById('input-artist-title-manual');
-    const mediaSelect = document.getElementById('select-media-manual');
-    const grade = state.gradeManual;
+    btnCalcManual.addEventListener('click', async () => {
+      const artistTitleInput = document.getElementById('input-artist-title-manual');
+      const mediaSelect = document.getElementById('select-media-manual');
+      const grade = state.gradeManual;
 
-    const artistTitle = artistTitleInput?.value.trim();
-    const media = mediaSelect?.value;
+      const artistTitle = artistTitleInput?.value.trim();
+      const media = mediaSelect?.value;
 
-    if (!artistTitle || !media || !grade) {
-      alert('Заполни все поля и выбери grade.');
-      return;
-    }
-
-    try {
-      const res = await fetch(API_URL_FOR_CASSETTE, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image_url: null,
-          user_artist: artistTitle,
-          user_album: artistTitle,
-          user_grade: grade,
-          media_type: media,
-        }),
-      });
-
-      if (!res.ok) {
-        alert('Не удалось получить оценку. Попробуй позже.');
+      if (!artistTitle || !media || !grade) {
+        alert('Заполни все поля и выбери grade.');
         return;
       }
 
-      const data = await res.json();
+      try {
+        const res = await fetch(API_URL_FOR_CASSETTE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image_url: null,
+            user_artist: artistTitle,
+            user_album: artistTitle,
+            user_grade: grade,
+            media_type: media,
+          }),
+        });
 
-      const textParts = [
-        `Результат для: ${artistTitle}`,
-        `Носитель: ${media}`,
-        `Grade: ${grade}`,
-        '',
-        data.text || 'Сервер вернул пустой ответ.',
-      ];
+        if (!res.ok) {
+          alert('Не удалось получить оценку. Попробуй позже.');
+          return;
+        }
 
-      if (resultText) {
-        resultText.textContent = textParts.join('\n');
+        const data = await res.json();
+
+        const textParts = [
+          `Результат для: ${artistTitle}`,
+          `Носитель: ${media}`,
+          `Grade: ${grade}`,
+          '',
+          data.text || 'Сервер вернул пустой ответ.',
+        ];
+
+        if (resultText) {
+          resultText.textContent = textParts.join('\n');
+        }
+
+        openResultModal();
+      } catch (e) {
+        console.error(e);
+        alert('Произошла ошибка при запросе к серверу.');
       }
-
-      openResultModal();
-    } catch (e) {
-      console.error(e);
-      alert('Произошла ошибка при запросе к серверу.');
-    }
-  });
- }
+    });
+  }
 
   // --- ЭКРАН РЕЗЕРВА / ОПЛАТЫ (DOM-элементы) ---
   const backReserve = document.getElementById('btn-back-from-reserve');
@@ -915,9 +920,9 @@ if (gradeButtonsManual.length && btnCalcManual) {
           return;
         }
 
-        const tg = window.Telegram?.WebApp;
-        if (tg?.openLink) {
-          tg.openLink(data.payUrl);
+        const tg2 = window.Telegram?.WebApp;
+        if (tg2?.openLink) {
+          tg2.openLink(data.payUrl);
         } else {
           window.open(data.payUrl, '_blank');
         }
