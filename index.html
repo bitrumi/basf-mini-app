@@ -86,9 +86,9 @@
       </div>
 
       <!-- Мини-плеер выбранного трека -->
-      <div id="music-player" class="music-player">
-        <!-- сюда JS будет подставлять информацию о треке и кнопку ▶/⏸ -->
-      </div>
+     <div id="music-player" class="music-player">
+      <!-- сюда JS будет подставлять информацию о треке и кнопку ▶/⏸ -->
+     </div>
 
       <!-- Текст и перевод -->
       <div id="music-lyrics-block" class="music-lyrics-block">
@@ -123,7 +123,30 @@
     </div>
   </div>
 </div>
+    
+    <!-- Модальное окно: Полноэкранный текст песни -->
+<div class="modal-overlay" id="lyrics-full-modal">
+  <div class="modal-card lyrics-full-card">
+    <div class="modal-header">
+      <!-- УБРАЛИ стрелку "←" -->
+      <h2 id="lyrics-full-title">Текст песни</h2>
+      <button class="modal-close" id="lyrics-full-close">×</button>
+    </div>
 
+    <div class="modal-content">
+      <!-- Мини-плеер (минимальный) -->
+      <div id="lyrics-full-player" class="music-player lyrics-full-player">
+        <!-- сюда JS подставит название и кнопку ▶/⏸ -->
+      </div>
+
+      <!-- Один блок текста -->
+      <div class="music-lyrics-content lyrics-full-content">
+        <pre id="lyrics-full-text" class="music-lyrics-pane active"></pre>
+      </div>
+    </div>
+   </div>
+ </div>
+    
     <!-- Модальное окно: Оценка (выбор способа) -->
     <div class="modal-overlay" id="assessment-modal">
       <div class="modal-card">

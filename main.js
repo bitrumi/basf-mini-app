@@ -488,9 +488,22 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   lyricsTabs.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.tab;
-      switchLyricsTab(tab);
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+
+    // локально можно продолжать переключать маленькие вкладки, если хочешь
+    switchLyricsTab(tab);
+
+    if (!currentTrack) {
+      // ещё не выбрали трек — просто меняем вкладки в маленькой модалке
+      return;
+    }
+
+    if (tab === 'original') {
+      openLyricsFullModal(currentTrack, 'original');
+    } else if (tab === 'translated') {
+      openLyricsFullModal(currentTrack, 'translated');
+    }
     });
   });
 
@@ -545,40 +558,141 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleTrackSelect(track) {
-    currentTrack = track;
+  currentTrack = track;
 
-    // 1) Подставить в поля оценки
-    const mainInput = document.getElementById('input-artist-title');
-    const manualInput = document.getElementById('input-artist-title-manual');
-    const value = `${track.artist} — ${track.title}`;
-    if (mainInput) mainInput.value = value;
-    if (manualInput) manualInput.value = value;
+  const mainInput = document.getElementById('input-artist-title');
+  const manualInput = document.getElementById('input-artist-title-manual');
+  const value = `${track.artist} — ${track.title}`;
+  if (mainInput) mainInput.value = value;
+  if (manualInput) manualInput.value = value;
 
-    // 2) Обновить мини-плеер
-    const playerEl = document.getElementById('music-player');
-    if (playerEl) {
-      renderMusicPlayer(playerEl, track);
-    }
+  const playerEl = document.getElementById('music-player');
+  if (playerEl) {
+    renderMusicPlayer(playerEl, track);
+  }
 
-    // 3) Показать только оригинальный текст
-    const originalEl = document.getElementById('music-lyrics-original');
-    const translatedEl = document.getElementById('music-lyrics-translated');
+  const originalEl = document.getElementById('music-lyrics-original');
+  const translatedEl = document.getElementById('music-lyrics-translated');
 
-    if (originalEl) {
-      const original = track.lyrics_original && track.lyrics_original.trim();
-      originalEl.textContent = original || 'Текст песни пока недоступен.';
-    }
+  const original =
+    (track.lyrics_original || track.lyrics || track.text || '').trim();
+  const translated =
+    (track.lyrics_translated || track.translation || '').trim();
 
-    // Перевод пока просто гасим / ставим заглушку
-    if (translatedEl) {
-      translatedEl.textContent = 'Перевод будет добавлен позже.';
-    }
+  if (originalEl) {
+    originalEl.textContent =
+      original || 'Текст песни пока недоступен.';
+  }
 
-    switchLyricsTab('original');
+  if (translatedEl) {
+    translatedEl.textContent =
+      translated || 'Перевод будет добавлен позже.';
+  }
+
+  switchLyricsTab('original');
   }
 
   // --- МОДАЛКА МУЗЫКИ завершена ---
 
+      // --- ВТОРАЯ МОДАЛКА: ПОЛНОЭКРАННЫЙ ТЕКСТ ПЕСНИ ---
+  const lyricsFullModal = document.getElementById('lyrics-full-modal');
+  const lyricsFullClose = document.getElementById('lyrics-full-close');
+  const lyricsFullTitle = document.getElementById('lyrics-full-title');
+  const lyricsFullPlayer = document.getElementById('lyrics-full-player');
+  const lyricsFullText = document.getElementById('lyrics-full-text');
+
+  // mode = 'original' | 'translated'
+  function openLyricsFullModal(track, mode) {
+    if (!lyricsFullModal || !track) return;
+
+    const artist = track.artist || 'Неизвестный артист';
+    const title = track.title || 'Без названия';
+
+    if (lyricsFullTitle) {
+      if (mode === 'translated') {
+        lyricsFullTitle.textContent = `Перевод: ${artist} — ${title}`;
+      } else {
+        lyricsFullTitle.textContent = `Текст: ${artist} — ${title}`;
+      }
+    }
+
+    if (lyricsFullPlayer) {
+      lyricsFullPlayer.innerHTML = '';
+
+      const infoEl = document.createElement('div');
+      infoEl.className = 'music-player-info';
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'music-player-title';
+      titleSpan.textContent = `${artist} — ${title}`;
+
+      infoEl.appendChild(titleSpan);
+
+      const controlsEl = document.createElement('div');
+      controlsEl.className = 'music-player-controls';
+
+      const playBtn = document.createElement('button');
+      playBtn.className = 'music-player-play';
+      playBtn.textContent =
+        currentAudio && !currentAudio.paused ? '⏸' : '▶';
+
+      playBtn.addEventListener('click', () => {
+        if (!track.preview_url) return;
+
+        if (!currentAudio || currentTrack?.preview_url !== track.preview_url) {
+          if (currentAudio) currentAudio.pause();
+          currentAudio = new Audio(track.preview_url);
+          currentTrack = track;
+        }
+
+        if (currentAudio.paused) {
+          currentAudio.play();
+          playBtn.textContent = '⏸';
+        } else {
+          currentAudio.pause();
+          playBtn.textContent = '▶';
+        }
+      });
+
+      controlsEl.appendChild(playBtn);
+      lyricsFullPlayer.appendChild(infoEl);
+      lyricsFullPlayer.appendChild(controlsEl);
+    }
+
+    let text = '';
+    if (mode === 'translated') {
+      text =
+        (track.lyrics_translated || track.translation || '').trim() ||
+        'Перевод пока недоступен.';
+    } else {
+      text =
+        (track.lyrics_original || track.lyrics || track.text || '').trim() ||
+        'Текст песни пока недоступен.';
+    }
+
+    if (lyricsFullText) {
+      lyricsFullText.textContent = text;
+    }
+
+    lyricsFullModal.classList.add('show');
+  }
+
+  function closeLyricsFullModal() {
+    if (!lyricsFullModal) return;
+    lyricsFullModal.classList.remove('show');
+  }
+
+  if (lyricsFullClose) {
+    lyricsFullClose.addEventListener('click', closeLyricsFullModal);
+  }
+  if (lyricsFullModal) {
+    lyricsFullModal.addEventListener('click', (e) => {
+      if (e.target === lyricsFullModal) {
+        closeLyricsFullModal();
+      }
+    });
+  }
+   
   // --- МОДАЛКА ТАБЛИЦ РЕДКОСТИ ---
   const rarityModal = document.getElementById('rarity-modal');
   const rarityModalClose = document.getElementById('rarity-modal-close');
