@@ -127,15 +127,10 @@
       <h2 id="lyrics-full-title">Текст песни</h2>
 
       <div class="modal-header-actions">
-        <!-- Тумблер режима скролла -->
-        <button id="lyrics-scroll-toggle" class="lyrics-scroll-toggle">
-          Ручной скролл
-        </button>
-
         <button class="music-header-play" id="lyrics-full-play">▶</button>
         <button class="modal-close" id="lyrics-full-close">×</button>
       </div>
-    </div>
+    </div> <!-- ВАЖНО: закрываем .modal-header здесь -->
 
     <div class="modal-content">
       <!-- Информация о треке -->
@@ -143,13 +138,13 @@
         <!-- сюда JS подставит название -->
       </div>
 
-      <!-- Бегущий текст -->
+      <!-- Бегущий текст / строки -->
       <div class="music-lyrics-content lyrics-full-content">
         <pre id="lyrics-full-text" class="music-lyrics-pane active"></pre>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!-- /modal-content -->
+  </div> <!-- /modal-card -->
+</div> <!-- /modal-overlay -->
     
     <!-- Модальное окно: Оценка (выбор способа) -->
     <div class="modal-overlay" id="assessment-modal">

@@ -726,11 +726,6 @@ function openLyricsFullModal(track, mode) {
     container.scrollTop = 0;
   }
 
-  // опционально можно обновить подпись кнопки
-  if (lyricsScrollToggle) {
-    lyricsScrollToggle.textContent = 'Строка за строкой';
-  }
-
   // запускаем построчное появление
   startLineByLineLyrics(text);
 }
@@ -774,13 +769,6 @@ if (lyricsFullPlayBtn) {
   });
 }
 
-// Тумблер сейчас можно оставить как есть или позже повесить на переключение режимов
-if (lyricsScrollToggle) {
-  lyricsScrollToggle.addEventListener('click', () => {
-    // здесь позже можно добавить переключение на "обычный автоскролл"
-    // пока просто ничего не делаем или показываем подсказку
-  });
-}
   // --- МОДАЛКА РЕЗЕРВА / ОПЛАТЫ ---
   const reserveModal = document.getElementById('reserve-modal');
   const reserveModalClose = document.getElementById('reserve-modal-close');
