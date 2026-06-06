@@ -79,11 +79,7 @@
       </div>
 
       <!-- Результаты поиска -->
-      <div id="music-results" class="music-results">
-        <p class="placeholder" data-i18n="music_modal_placeholder">
-          Скоро здесь появится поиск по Deezer/Spotify. Пока это заглушка.
-        </p>
-      </div>
+<div id="music-results" class="music-results"></div>
 
       <!-- Мини-плеер выбранного трека -->
      <div id="music-player" class="music-player">
@@ -128,24 +124,32 @@
 <div class="modal-overlay" id="lyrics-full-modal">
   <div class="modal-card lyrics-full-card">
     <div class="modal-header">
-      <!-- УБРАЛИ стрелку "←" -->
       <h2 id="lyrics-full-title">Текст песни</h2>
-      <button class="modal-close" id="lyrics-full-close">×</button>
+
+      <div class="modal-header-actions">
+        <!-- Тумблер режима скролла -->
+        <button id="lyrics-scroll-toggle" class="lyrics-scroll-toggle">
+          Ручной скролл
+        </button>
+
+        <button class="music-header-play" id="lyrics-full-play">▶</button>
+        <button class="modal-close" id="lyrics-full-close">×</button>
+      </div>
     </div>
 
     <div class="modal-content">
-      <!-- Мини-плеер (минимальный) -->
+      <!-- Информация о треке -->
       <div id="lyrics-full-player" class="music-player lyrics-full-player">
-        <!-- сюда JS подставит название и кнопку ▶/⏸ -->
+        <!-- сюда JS подставит название -->
       </div>
 
-      <!-- Один блок текста -->
+      <!-- Бегущий текст -->
       <div class="music-lyrics-content lyrics-full-content">
         <pre id="lyrics-full-text" class="music-lyrics-pane active"></pre>
       </div>
     </div>
-   </div>
- </div>
+  </div>
+</div>
     
     <!-- Модальное окно: Оценка (выбор способа) -->
     <div class="modal-overlay" id="assessment-modal">
